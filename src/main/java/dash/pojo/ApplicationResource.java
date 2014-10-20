@@ -179,8 +179,6 @@ public class ApplicationResource {
 	@Path("/upload")
 	public Response getFile(@QueryParam("applicationId") Long id,
 			@QueryParam("fileName") String fileName) throws AppException {
-	    
-		fileName=fileName.replaceAll(" ", "_").toLowerCase();
 		
 		Application application= applicationService.getApplicationById(id);
 		
@@ -201,8 +199,6 @@ public class ApplicationResource {
 	public Response deleteUpload(
 			@QueryParam("applicationId") Long id,
 			@QueryParam("fileName") String fileName) throws AppException{
-		
-		fileName=fileName.replaceAll(" ", "_").toLowerCase();
 		
 		Application application= applicationService.getApplicationById(id);
 		
