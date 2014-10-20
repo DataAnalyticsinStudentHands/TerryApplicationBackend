@@ -26,6 +26,8 @@ import dash.pojo.EmploymentResource;
 import dash.pojo.EmploymentDetailedView;
 import dash.pojo.ScholarshipResource;
 import dash.pojo.ScholarshipDetailedView;
+import dash.pojo.SurfApplicationResource;
+import dash.pojo.SurfApplicationDetailedView;
 import dash.pojo.UniversityDetailedView;
 import dash.pojo.UniversityResource;
 import dash.pojo.UserDetailedView;
@@ -53,6 +55,7 @@ public class DashApplicationSetup extends ResourceConfig {
 		register(CourseworkResource.class);
 		register(EmploymentResource.class);
 		register(ScholarshipResource.class);
+		register(SurfApplicationResource.class);
 		register(UniversityResource.class);
 		register(UsersResource.class);
 		register(VolunteerResource.class);
@@ -92,6 +95,9 @@ public class DashApplicationSetup extends ResourceConfig {
 		property(EntityFilteringFeature.ENTITY_FILTERING_SCOPE,
 				new Annotation[] { ScholarshipDetailedView.Factory.get() });
 
+		property(EntityFilteringFeature.ENTITY_FILTERING_SCOPE,
+				new Annotation[] { SurfApplicationDetailedView.Factory.get() });
+		
 		property(EntityFilteringFeature.ENTITY_FILTERING_SCOPE,
 				new Annotation[] { UniversityDetailedView.Factory.get() });
 

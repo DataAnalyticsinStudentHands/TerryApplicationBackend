@@ -63,6 +63,10 @@
     <bean id="scholarshipService" class="dash.service.ScholarshipServiceDbAccessImpl" />	
     <bean id="scholarshipResource" class="dash.pojo.ScholarshipResource" />
     
+    <bean id="surfApplicationDao" class="dash.dao.SurfApplicationDaoJPA2Impl"/>	
+    <bean id="surfApplicationService" class="dash.service.SurfApplicationServiceDbAccessImpl" />	
+    <bean id="surfApplicationResource" class="dash.pojo.SurfApplicationResource" />
+    
     <bean id="universityDao" class="dash.dao.UniversityDaoJPA2Impl"/>	
     <bean id="universityService" class="dash.service.UniversityServiceDbAccessImpl" />	
     <bean id="universityResource" class="dash.pojo.UniversityResource" />      
