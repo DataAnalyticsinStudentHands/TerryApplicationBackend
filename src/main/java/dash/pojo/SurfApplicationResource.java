@@ -28,26 +28,25 @@ import org.springframework.stereotype.Component;
 
 import dash.errorhandling.AppException;
 import dash.filters.AppConstants;
-import dash.service.ApplicationService;
+import dash.service.SurfApplicationService;
 
 /**
  * 
- * Service Class that handles REST requests for Applications
+ * Service Class that handles REST requests for SurfApplications
  * 
  * @author plindner
  */
 @Component
-@Path("/applications")
-public class ApplicationResource {
+@Path("/surf_application")
+public class SurfApplicationResource {
 
 	@Autowired
-	private ApplicationService applicationService;
-
+	private SurfApplicationService applicationService;
 	
 	@POST
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.TEXT_HTML })
-	public Response createApplication(Application application)
+	public Response createApplication(SurfApplication application)
 			throws AppException {
 		Long createApplicationId = applicationService
 				.createApplication(application);
@@ -55,16 +54,16 @@ public class ApplicationResource {
 				// 201
 				.entity(createApplicationId.toString())
 				.header("Location",
-						"http://..../applications/"
+						"http://..../surf_applications/"
 								+ String.valueOf(createApplicationId)).build();
 	}
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public List<Application> getApplications(
+	public List<SurfApplication> getApplications(
 			@QueryParam("orderByInsertionDate") String orderByInsertionDate)
 			throws IOException, AppException {
-		List<Application> applications = applicationService
+		List<SurfApplication> applications = applicationService
 				.getApplications(orderByInsertionDate);
 		return applications;
 	}
@@ -75,12 +74,12 @@ public class ApplicationResource {
 	public Response getApplicationById(@PathParam("id") Long id,
 			@QueryParam("detailed") boolean detailed) throws IOException,
 			AppException {
-		Application applicaionById = applicationService.getApplicationById(id);
+		SurfApplication applicaionById = applicationService.getApplicationById(id);
 		return Response
 				.status(200)
-				.entity(new GenericEntity<Application>(applicaionById) {
+				.entity(new GenericEntity<SurfApplication>(applicaionById) {
 				},
-						detailed ? new Annotation[] { ApplicationDetailedView.Factory
+						detailed ? new Annotation[] { SurfApplicationDetailedView.Factory
 								.get() } : new Annotation[0])
 				.header("Access-Control-Allow-Headers", "X-extra-header")
 				.allow("OPTIONS").build();
@@ -91,9 +90,9 @@ public class ApplicationResource {
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.TEXT_HTML })
 	public Response putApplicationById(@PathParam("id") Long id,
-			Application application) throws AppException {
+			SurfApplication application) throws AppException {
 
-		Application applicationById = applicationService
+		SurfApplication applicationById = applicationService
 				.verifyApplicationExistenceById(id);
 
 		if (applicationById == null) {
@@ -106,7 +105,7 @@ public class ApplicationResource {
 					// 201
 					.entity("A new application has been created AT THE LOCATION you specified")
 					.header("Location",
-							"http://.../applications/"
+							"http://.../surf_applications/"
 									+ String.valueOf(createApplictionObjectId))
 					.build();
 		} else {
@@ -117,7 +116,7 @@ public class ApplicationResource {
 					// 200
 					.entity("The application you specified has been fully updated created AT THE LOCATION you specified")
 					.header("Location",
-							"http://.../applications" + String.valueOf(id))
+							"http://.../surf_applications" + String.valueOf(id))
 					.build();
 		}
 	}
@@ -128,7 +127,7 @@ public class ApplicationResource {
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.TEXT_HTML })
 	public Response partialUpdateApplication(@PathParam("id") Long id,
-			Application application) throws AppException {
+			SurfApplication application) throws AppException {
 //		application.setId(id);
 		applicationService.updatePartiallyApplication(application);
 		return Response
@@ -138,80 +137,6 @@ public class ApplicationResource {
 				.build();
 	}
 	
-	@POST
-	@Path("/upload")
-	@Consumes({ MediaType.MULTIPART_FORM_DATA })
-	public Response uploadFile(
-			@QueryParam("id") Long id,
-		@FormDataParam("file") InputStream uploadedInputStream,
-		@FormDataParam("file") FormDataContentDisposition fileDetail,
-		@HeaderParam("Content-Length") final long fileSize) throws AppException {
-		
-		
-		
-		Application application= applicationService.getApplicationById(id);
-		
-		//TODO: Generate directory if not set
-		//if(application.getDocument_folder()==null)	
-		String uploadedFileLocation = AppConstants.APPLICATION_UPLOAD_LOCATION_FOLDER+"/"
-				+application.getDocument_folder()+"/" + fileDetail.getFileName().replaceAll("%20", "_").toLowerCase();;
-		// save it
-		applicationService.uploadFile(uploadedInputStream, uploadedFileLocation, application);
- 
-		String output = "File uploaded to : " + uploadedFileLocation;
- 
-		return Response.status(200).entity(output).build();
- 
-	}
-	
-	@GET
-	@Path("/upload")
-	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public Response getFileNames(@QueryParam("applicationId") Long id) throws AppException{
-		
-		Application application= applicationService.getApplicationById(id);
-		JaxbList<String> fileNames=new JaxbList<String>(applicationService.getFileNames(application));
-		return Response.status(200).entity(fileNames).build();
-	}
-	
-	//Gets a specific file and allows the user to download the pdf
-	@GET
-	@Path("/upload")
-	public Response getFile(@QueryParam("applicationId") Long id,
-			@QueryParam("fileName") String fileName) throws AppException {
-		
-		Application application= applicationService.getApplicationById(id);
-		
-		if(application==null){
-			return Response.status(Response.Status.BAD_REQUEST)
-					.entity("Invalid applicationId, unable to locate application with id: "+id).build();
-		}
-		
-		String uploadedFileLocation = AppConstants.APPLICATION_UPLOAD_LOCATION_FOLDER+application.getDocument_folder()+"/" + fileName;
-		
-		
-		return Response.ok(applicationService.getUploadFile(uploadedFileLocation, application))
-				.type("application/pdf").build(); 
-	}
-	
-	@DELETE
-	@Path("/upload")
-	public Response deleteUpload(
-			@QueryParam("applicationId") Long id,
-			@QueryParam("fileName") String fileName) throws AppException{
-		
-		Application application= applicationService.getApplicationById(id);
-		
-		String uploadedFileLocation = AppConstants.APPLICATION_UPLOAD_LOCATION_FOLDER+application.getDocument_folder()+"/" + fileName;
-		// save it
-		applicationService.deleteUploadFile(uploadedFileLocation, application);
- 
-		String output = "File removed from: " + uploadedFileLocation;
-		
-		return Response.status(200).entity(output).build();
-	}
-		
-
 	/*
 	 * *********************************** DELETE
 	 * ***********************************
@@ -221,7 +146,7 @@ public class ApplicationResource {
 	@Produces({ MediaType.TEXT_HTML })
 	public Response deleteApplication(@PathParam("id") Long id)
 			throws AppException {
-		Application application = new Application();
+		SurfApplication application = new SurfApplication();
 		application.setId(id);
 		applicationService.deleteApplication(application);
 		return Response.status(Response.Status.NO_CONTENT)
@@ -239,22 +164,6 @@ public class ApplicationResource {
 				// 204
 				.entity("All applications have been successfully removed")
 				.build();
-	}
-	
-	@XmlRootElement(name="fileNames")
-	public static class JaxbList<T>{
-	    protected List<T> list;
-
-	    public JaxbList(){}
-
-	    public JaxbList(List<T> list){
-	    	this.list=list;
-	    }
-
-	    @XmlElement(name="fileName")
-	    public List<T> getList(){
-	    	return list;
-	    }
 	}
 
 }
