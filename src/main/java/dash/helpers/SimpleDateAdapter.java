@@ -1,4 +1,5 @@
 package dash.helpers;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -17,7 +18,14 @@ public class SimpleDateAdapter extends XmlAdapter<String, Date> {
 
 	@Override
 	public Date unmarshal(String v) throws Exception {
-		return dateFormat.parse(v);
+		Date newdate = null;
+		try {
+			newdate = dateFormat.parse(v);			
+        } catch (ParseException e) {
+        	return null;
+        }
+		return newdate;
+		
 	}
 
 	@Override
