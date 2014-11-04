@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 public class SimpleDateAdapter extends XmlAdapter<String, Date> {
 
-	private static final String SIMPLE_DATE_FORMAT = "dd/MM/yyyy";
+	private static final String SIMPLE_DATE_FORMAT = "MM/dd/yyyy";
 	private SimpleDateFormat dateFormat;
 
 	public SimpleDateAdapter() {
