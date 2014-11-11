@@ -2,7 +2,6 @@ package dash.pojo;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.annotation.Annotation;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -79,9 +78,7 @@ public class ApplicationResource {
 		return Response
 				.status(200)
 				.entity(new GenericEntity<Application>(applicaionById) {
-				},
-						detailed ? new Annotation[] { ApplicationDetailedView.Factory
-								.get() } : new Annotation[0])
+				})
 				.header("Access-Control-Allow-Headers", "X-extra-header")
 				.allow("OPTIONS").build();
 	}

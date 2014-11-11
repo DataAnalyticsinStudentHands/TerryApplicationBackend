@@ -58,7 +58,6 @@ public class Application implements  Serializable, IAclObject{
 	
 	@XmlElement(name = "dob")
 	@XmlJavaTypeAdapter(SimpleDateAdapter.class)
-	@ApplicationDetailedView
 	private Date dob;
 	
 	@XmlElement(name = "zip_code")
@@ -122,7 +121,6 @@ public class Application implements  Serializable, IAclObject{
 	private Float highschool_scale;
 	
 	@XmlJavaTypeAdapter(SimpleDateAdapter.class)
-	@ApplicationDetailedView
 	@XmlElement(name = "highschool_graduation_date")
 	private Date highschool_graduation_date;
 	  
@@ -148,7 +146,6 @@ public class Application implements  Serializable, IAclObject{
 	private Float psat_selection;
 	
 	@XmlJavaTypeAdapter(SimpleDateAdapter.class)
-	@ApplicationDetailedView
 	@XmlElement(name = "psat_date")
 	private Date psat_date;
 	
@@ -165,7 +162,6 @@ public class Application implements  Serializable, IAclObject{
 	private Float sat_composite;
 	
 	@XmlJavaTypeAdapter(SimpleDateAdapter.class)
-	@ApplicationDetailedView
 	@XmlElement(name = "sat_date")
 	private Date sat_date;
 	
@@ -173,7 +169,6 @@ public class Application implements  Serializable, IAclObject{
 	private Float act_composite;
 		
 	@XmlJavaTypeAdapter(SimpleDateAdapter.class)
-	@ApplicationDetailedView
 	@XmlElement(name = "act_date")
 	private Date act_date;
 	
@@ -181,7 +176,6 @@ public class Application implements  Serializable, IAclObject{
 	private String national_merit;
 	
 	@XmlJavaTypeAdapter(SimpleDateAdapter.class)
-	@ApplicationDetailedView
 	@XmlElement(name = "national_merit_date")
 	private Date national_merit_date;
 	
@@ -189,7 +183,6 @@ public class Application implements  Serializable, IAclObject{
 	private String national_achievement;
 	
 	@XmlJavaTypeAdapter(SimpleDateAdapter.class)
-	@ApplicationDetailedView
 	@XmlElement(name = "national_achievement_date")
 	private Date national_achievement_date;
 	
@@ -197,7 +190,6 @@ public class Application implements  Serializable, IAclObject{
 	private String national_hispanic;
 	
 	@XmlJavaTypeAdapter(SimpleDateAdapter.class)
-	@ApplicationDetailedView
 	@XmlElement(name = "national_hispanic_date")
 	private Date national_hispanic_date;
 	
@@ -352,12 +344,10 @@ public class Application implements  Serializable, IAclObject{
 	private String app_uh_method;
 	
 	@XmlJavaTypeAdapter(SimpleDateAdapter.class)
-	@ApplicationDetailedView
 	@XmlElement(name = "app_uh_date_sub")
 	private Date app_uh_date_sub;
 	
 	@XmlJavaTypeAdapter(SimpleDateAdapter.class)
-	@ApplicationDetailedView
 	@XmlElement(name = "app_uh_date_int_sub")
 	private Date app_uh_date_int_sub;
 	
@@ -365,12 +355,10 @@ public class Application implements  Serializable, IAclObject{
 	private String transcript_method;
 	
 	@XmlJavaTypeAdapter(SimpleDateAdapter.class)
-	@ApplicationDetailedView
 	@XmlElement(name = "transcript_date_sub")
 	private Date transcript_date_sub;
 	
 	@XmlJavaTypeAdapter(SimpleDateAdapter.class)
-	@ApplicationDetailedView
 	@XmlElement(name = "transcript_date_int_sub")
 	private Date transcript_date_int_sub;
 	
@@ -378,12 +366,10 @@ public class Application implements  Serializable, IAclObject{
 	private String fafsa_method;
 	
 	@XmlJavaTypeAdapter(SimpleDateAdapter.class)
-	@ApplicationDetailedView
 	@XmlElement(name = "fafsa_date_sub")
 	private Date fafsa_date_sub;
 	
 	@XmlJavaTypeAdapter(SimpleDateAdapter.class)
-	@ApplicationDetailedView
 	@XmlElement(name = "fafsa_date_int_sub")
 	private Date fafsa_date_int_sub;
 	
@@ -391,12 +377,10 @@ public class Application implements  Serializable, IAclObject{
 	private String housing_method;
 	
 	@XmlJavaTypeAdapter(SimpleDateAdapter.class)
-	@ApplicationDetailedView
 	@XmlElement(name = "housing_date_sub")
 	private Date housing_date_sub;
 	
 	@XmlJavaTypeAdapter(SimpleDateAdapter.class)
-	@ApplicationDetailedView
 	@XmlElement(name = "housing_date_int_sub")
 	private Date housing_date_int_sub;
 	  

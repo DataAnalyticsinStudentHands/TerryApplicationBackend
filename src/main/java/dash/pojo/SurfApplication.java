@@ -72,7 +72,6 @@ public class SurfApplication implements  Serializable, IAclObject{
 	private String completed_hours;
 	
 	@XmlJavaTypeAdapter(SimpleDateAdapter.class)
-	@ApplicationDetailedView
 	@XmlElement(name = "anticipated_grad_date")
 	private Date anticipated_grad_date;
 		

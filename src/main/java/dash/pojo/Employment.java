@@ -37,12 +37,10 @@ public class Employment implements  Serializable, IAclObject{
 	
 	@XmlElement(name = "date_from")
 	@XmlJavaTypeAdapter(SimpleDateAdapter.class)
-	@ApplicationDetailedView
 	private Date date_from;
 	
 	@XmlElement(name = "date_to")
 	@XmlJavaTypeAdapter(SimpleDateAdapter.class)
-	@ApplicationDetailedView
 	private Date date_to;
 	
 	public Employment(){}

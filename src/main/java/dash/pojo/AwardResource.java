@@ -1,7 +1,6 @@
 package dash.pojo;
 
 import java.io.IOException;
-import java.lang.annotation.Annotation;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -71,9 +70,7 @@ public class AwardResource {
 		return Response
 				.status(200)
 				.entity(new GenericEntity<Award>(awardById) {
-				},
-						detailed ? new Annotation[] { AwardDetailedView.Factory
-								.get() } : new Annotation[0])
+				})
 				.header("Access-Control-Allow-Headers", "X-extra-header")
 				.allow("OPTIONS").build();
 	}

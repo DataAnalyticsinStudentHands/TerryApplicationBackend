@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.InputStream;
 import java.util.List;
 
-import javax.ws.rs.core.Response;
-
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;

@@ -139,6 +139,13 @@ UserService {
 
 		return getUsersFromEntities(users);
 	}
+	
+	@Override
+	public List<User> getMyUser(String orderByInsertionDate,
+			Integer numberDaysToLookBack) throws AppException {
+		return getUsers(orderByInsertionDate, numberDaysToLookBack);
+		
+	}
 
 	private boolean isOrderByInsertionDateParameterValid(
 			String orderByInsertionDate) {
@@ -295,12 +302,13 @@ UserService {
 
 	}
 
-	/****************** Methods for Acl *****************/
-
-
-
-	// Creates/Updates the ACL of user
-	// Is also an example of how to implement class specific ACL helper methods.
+	//****************** Methods for Acl *****************
+	
+	/**
+	 * Creates/Updates the ACL of user.Is also an example of how to implement class specific ACL helper methods.
+	 * @param user
+	 * @param recipient
+	 */ 
 	public void createUserACL(User user, Sid recipient) {
 		MutableAcl acl;
 		ObjectIdentity oid = new ObjectIdentityImpl(User.class,
@@ -326,14 +334,4 @@ UserService {
 				+ " contact " + user);
 
 	}
-
-	public void deleteACL(User user) {
-
-		ObjectIdentity oid = new ObjectIdentityImpl(User.class, user.getId());
-		mutableAclService.deleteAcl(oid, false);
-
-	}
-
-
-
 }

@@ -1,7 +1,6 @@
 package dash.pojo;
 
 import java.io.IOException;
-import java.lang.annotation.Annotation;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -39,10 +38,8 @@ public class ActivityResource {
 	@POST
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.TEXT_HTML })
-	public Response createActivity(Activity activity)
-			throws AppException {
-		Long createActivityId = activityService
-				.createActivity(activity);
+	public Response createActivity(Activity activity) throws AppException {
+		Long createActivityId = activityService.createActivity(activity);
 		return Response.status(Response.Status.CREATED)
 				// 201
 				.entity(createActivityId.toString())
@@ -68,13 +65,9 @@ public class ActivityResource {
 			@QueryParam("detailed") boolean detailed) throws IOException,
 			AppException {
 		Activity activityById = activityService.getActivityById(id);
-		return Response
-				.status(200)
+		return Response.status(200)
 				.entity(new GenericEntity<Activity>(activityById) {
-				},
-						detailed ? new Annotation[] { ActivityDetailedView.Factory
-								.get() } : new Annotation[0])
-				.header("Access-Control-Allow-Headers", "X-extra-header")
+				}).header("Access-Control-Allow-Headers", "X-extra-header")
 				.allow("OPTIONS").build();
 	}
 
@@ -82,11 +75,10 @@ public class ActivityResource {
 	@Path("{id}")
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.TEXT_HTML })
-	public Response putActivityById(@PathParam("id") Long id,
-			Activity activity) throws AppException {
+	public Response putActivityById(@PathParam("id") Long id, Activity activity)
+			throws AppException {
 
-		Activity activityById = activityService
-				.verifyActivityExistenceById(id);
+		Activity activityById = activityService.verifyActivityExistenceById(id);
 
 		if (activityById == null) {
 			// resource not existent yet, and should be created under the
@@ -109,8 +101,7 @@ public class ActivityResource {
 					// 200
 					.entity("The activity you specified has been fully updated created AT THE LOCATION you specified")
 					.header("Location",
-							"http://.../activity" + String.valueOf(id))
-					.build();
+							"http://.../activity" + String.valueOf(id)).build();
 		}
 	}
 
@@ -143,9 +134,8 @@ public class ActivityResource {
 		activity.setId(id);
 		activityService.deleteActivity(activity);
 		return Response.status(Response.Status.NO_CONTENT)
-				// 204
-				.entity("activity successfully removed from database")
-				.build();
+		// 204
+				.entity("activity successfully removed from database").build();
 	}
 
 	@DELETE
@@ -154,9 +144,8 @@ public class ActivityResource {
 	public Response deleteActivitys() {
 		activityService.deleteActivitys();
 		return Response.status(Response.Status.NO_CONTENT)
-				// 204
-				.entity("All activity have been successfully removed")
-				.build();
+		// 204
+				.entity("All activity have been successfully removed").build();
 	}
 
 }
