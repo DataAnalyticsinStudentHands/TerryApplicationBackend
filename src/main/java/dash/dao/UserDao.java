@@ -11,7 +11,7 @@ import dash.pojo.User;
  *      href="http://www.codingpedia.org/ama/spring-mybatis-integration-example/">http://www.codingpedia.org/ama/spring-mybatis-integration-example/</a>
  */
 public interface UserDao {
-
+	
 	public List<UserEntity> getUsers(String orderByInsertionDate);
 
 	public List<UserEntity> getRecentUsers(int numberOfDaysToLookBack);
@@ -33,7 +33,10 @@ public interface UserDao {
 	 * @return the user with the name specified or null if not existent
 	 */
 	public UserEntity getUserByName(String name);
-
+	
+	public String getRoleByName(String username);
+	
+	public void updateUserRole(String role, String username);
 
 	public void deleteUserById(User user);
 

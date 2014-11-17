@@ -25,7 +25,6 @@ public class SimpleDateAdapter extends XmlAdapter<String, Date> {
         	return null;
         }
 		return newdate;
-		
 	}
 
 	@Override

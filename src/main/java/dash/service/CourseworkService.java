@@ -41,6 +41,10 @@ public interface CourseworkService {
 	@PostAuthorize("hasPermission(returnObject, 'READ') or hasRole('ROLE_ADMIN')")
 	public Coursework getCourseworkById(Long id) throws AppException;
 	
+	@PostFilter("hasRole('ROLE_ADMIN')")
+	public List<Coursework> getCourseworkByAppId(Long appId) throws AppException;
+
+	
 	/*
 	 * ******************** Update related methods **********************
 	 */

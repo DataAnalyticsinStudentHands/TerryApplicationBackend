@@ -44,6 +44,21 @@ public class CourseworkDaoJPA2Impl implements CourseworkDao {
 			return null;
 		}
 	}
+	
+	@Override
+	public List<CourseworkEntity> getCourseworkByAppId(Long appId) {
+		
+		try {
+			String qlString = "SELECT u FROM CourseworkEntity u WHERE u.application_id = ?1";
+			TypedQuery<CourseworkEntity> query = entityManager.createQuery(
+					qlString, CourseworkEntity.class);
+			query.setParameter(1, appId);
+
+			return query.getResultList();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
 
 	@Override
 	public void deleteCoursework(Coursework courseworkPojo) {

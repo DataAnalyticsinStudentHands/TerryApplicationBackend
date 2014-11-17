@@ -22,6 +22,8 @@ public interface CourseworkDao {
 	 */
 	public CourseworkEntity getCourseworkById(Long id);
 	
+	public List<CourseworkEntity> getCourseworkByAppId(Long appId);
+	
 	public void deleteCoursework(Coursework coursework);
 
 	public Long createCoursework(CourseworkEntity coursework);

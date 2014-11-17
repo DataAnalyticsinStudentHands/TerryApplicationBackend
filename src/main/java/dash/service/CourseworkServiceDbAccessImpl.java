@@ -105,6 +105,15 @@ CourseworkService {
 
 		return response;
 	}
+	
+	@Override
+	public List<Coursework> getCourseworkByAppId(Long appId) throws AppException {
+
+		List<CourseworkEntity> courseworks = courseworkDao.getCourseworkByAppId(appId);
+		
+
+		return getCourseworkFromEntities(courseworks);
+	}
 
 	/********************* UPDATE-related methods implementation ***********************/
 	@Override

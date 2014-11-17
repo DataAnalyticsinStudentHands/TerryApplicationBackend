@@ -20,6 +20,7 @@ public class UserLoginController  extends JdbcDaoSupport {
 
 	private InsertAuthority insertAuthority;
 	private InsertLogin insertLogin;
+	private ResetPassword resetPassword;
 
 	// Instantiates the inner classes. Inheirited from grandparent class
 	// DaoSupport.
@@ -33,6 +34,10 @@ public class UserLoginController  extends JdbcDaoSupport {
 	public void create(User user, String authority) {
 		insertLogin.insert(user);
 		insertAuthority.insert(user, authority);
+	}
+	
+	public void passwordReset(User user){
+		resetPassword.reset(user);
 	}
 
 	/********* Inner Classes  ************/
@@ -66,6 +71,20 @@ public class UserLoginController  extends JdbcDaoSupport {
 			super.update(objs);
 		}
 
+	}
+	
+	protected class ResetPassword extends SqlUpdate {
+		protected ResetPassword(DataSource ds) {
+			super(ds, "UPDATE `login` SET `password` = ? WHERE `login`.`id` = ? ;");
+			declareParameter(new SqlParameter(Types.VARCHAR));
+			declareParameter(new SqlParameter(Types.INTEGER));
+			compile();
+		}
+		
+		protected void reset(User user){
+			Object[] objs = new Object[] {user.getPassword(), user.getId()};
+			super.update(objs);
+		}
 	}
 	
 }

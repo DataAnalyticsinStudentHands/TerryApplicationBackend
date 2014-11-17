@@ -28,7 +28,6 @@ import dash.helpers.NullAwareBeanUtilsBean;
 import dash.pojo.User;
 import dash.security.UserLoginController;
 
-
 public class UserServiceDbAccessImpl extends ApplicationObjectSupport implements
 UserService {
 
@@ -183,6 +182,13 @@ UserService {
 
 		return getUsersFromEntities(recentUsers);
 	}
+	
+	@Override
+	public List<String> getRole(User user) {
+		ArrayList<String> tempRole = new ArrayList<String>();
+		tempRole.add(userDao.getRoleByName(user.getUsername()));
+		return tempRole;
+	}
 
 	@Override
 	public int getNumberOfUsers() {
@@ -238,6 +244,22 @@ UserService {
 				|| user.getCellPhone() == null
 				|| user.getEmail() == null
 				|| user.getPicture() == null;
+	}
+	
+	@Override
+	@Transactional
+	public void resetPassword(User user) throws AppException{
+		User verifyUserExistenceById = verifyUserExistenceById(user.getId());
+		if (verifyUserExistenceById == null) {
+			throw new AppException(Response.Status.NOT_FOUND.getStatusCode(),
+					404,
+					"The resource you are trying to update does not exist in the database",
+					"Please verify existence of data in the database for the id - "
+							+ user.getId(), AppConstants.DASH_POST_URL);
+		}else
+		{
+			authoritiesController.passwordReset(user);	
+		}
 	}
 
 	/********************* DELETE-related methods implementation ***********************/
@@ -333,5 +355,23 @@ UserService {
 				+ recipient
 				+ " contact " + user);
 
+	}
+	
+	@Override
+	@Transactional
+	public void setRoleUser(User user) {
+		userDao.updateUserRole("ROLE_USER", user.getUsername());
+	}
+
+	@Override
+	@Transactional
+	public void setRoleModerator(User user) {
+		userDao.updateUserRole("ROLE_MODERATOR", user.getUsername());
+	}
+
+	@Override
+	@Transactional
+	public void setRoleAdmin(User user) {
+		userDao.updateUserRole("ROLE_ADMIN", user.getUsername());		
 	}
 }

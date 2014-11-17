@@ -51,7 +51,7 @@ public class CourseworkResource {
 	}
 
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	@Produces({ MediaType.APPLICATION_JSON })
 	public List<Coursework> getCoursework(
 			@QueryParam("orderByInsertionDate") String orderByInsertionDate)
 			throws IOException, AppException {
@@ -62,7 +62,7 @@ public class CourseworkResource {
 
 	@GET
 	@Path("{id}")
-	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	@Produces({ MediaType.APPLICATION_JSON })
 	public Response getCourseworkById(@PathParam("id") Long id,
 			@QueryParam("detailed") boolean detailed) throws IOException,
 			AppException {
@@ -73,6 +73,17 @@ public class CourseworkResource {
 				})
 				.header("Access-Control-Allow-Headers", "X-extra-header")
 				.allow("OPTIONS").build();
+	}
+	
+	@GET
+	@Path("list/{id}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public List<Coursework> getCourseworkByApplicationId(@PathParam("id") Long appId,
+			@QueryParam("detailed") boolean detailed) throws IOException,
+			AppException {
+		List<Coursework> coursework = courseworkService
+				.getCourseworkByAppId(appId);
+		return coursework;
 	}
 
 	@PUT

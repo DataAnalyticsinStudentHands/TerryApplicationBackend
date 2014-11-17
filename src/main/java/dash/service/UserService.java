@@ -57,6 +57,8 @@ public interface UserService {
 	 */
 	@PostAuthorize("hasPermission(returnObject, 'READ') or hasRole('ROLE_ADMIN')")
 	public User getUserById(Long id) throws AppException;
+	
+	public List<String> getRole(User user);
 
 	/*
 	 * ******************** Update related methods **********************
@@ -66,6 +68,18 @@ public interface UserService {
 
 	@PreAuthorize("hasPermission(#user, 'WRITE') or hasRole('ROLE_ADMIN')")
 	public void updatePartiallyUser(User user) throws AppException;
+	
+	@PreAuthorize("hasPermission(#user, 'WRITE') or hasRole('ROLE_ADMIN')")
+	public void resetPassword(User user) throws AppException;
+	
+	@PreAuthorize("hasPermission(#user, 'WRITE') and hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+	public void setRoleUser(User user);
+
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public void setRoleModerator(User user);
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public void setRoleAdmin(User user);
 
 	/*
 	 * ******************** Delete related methods **********************
