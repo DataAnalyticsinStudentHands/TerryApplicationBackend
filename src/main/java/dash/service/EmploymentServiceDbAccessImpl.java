@@ -12,11 +12,13 @@ import org.springframework.context.support.ApplicationObjectSupport;
 import org.springframework.security.acls.model.MutableAclService;
 import org.springframework.transaction.annotation.Transactional;
 
+import dash.dao.ActivityEntity;
 import dash.dao.EmploymentDao;
 import dash.dao.EmploymentEntity;
 import dash.errorhandling.AppException;
 import dash.filters.AppConstants;
 import dash.helpers.NullAwareBeanUtilsBean;
+import dash.pojo.Activity;
 import dash.pojo.Employment;
 import dash.security.CustomPermission;
 import dash.security.GenericAclController;
@@ -95,6 +97,14 @@ EmploymentService {
 		}
 
 		return new Employment(employmentDao.getEmploymentById(id));
+	}
+	
+	@Override
+	public List<Activity> getActivityByAppId(Long appId) throws AppException {
+		
+		List<ActivityEntity> activities = activityDao.getActivityByAppId(appId);
+		
+		return getActivityFromEntities(activities);
 	}
 
 	private List<Employment> getEmploymentFromEntities(List<EmploymentEntity> employmentEntities) {

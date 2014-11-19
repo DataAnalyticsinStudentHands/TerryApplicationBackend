@@ -12,11 +12,13 @@ import org.springframework.context.support.ApplicationObjectSupport;
 import org.springframework.security.acls.model.MutableAclService;
 import org.springframework.transaction.annotation.Transactional;
 
+import dash.dao.ActivityEntity;
 import dash.dao.ScholarshipDao;
 import dash.dao.ScholarshipEntity;
 import dash.errorhandling.AppException;
 import dash.filters.AppConstants;
 import dash.helpers.NullAwareBeanUtilsBean;
+import dash.pojo.Activity;
 import dash.pojo.Scholarship;
 import dash.security.CustomPermission;
 import dash.security.GenericAclController;
@@ -95,6 +97,14 @@ ScholarshipService {
 		}
 
 		return new Scholarship(scholarshipDao.getScholarshipById(id));
+	}
+	
+	@Override
+	public List<Activity> getActivityByAppId(Long appId) throws AppException {
+		
+		List<ActivityEntity> activities = activityDao.getActivityByAppId(appId);
+		
+		return getActivityFromEntities(activities);
 	}
 
 	private List<Scholarship> getScholarshipFromEntities(List<ScholarshipEntity> scholarshipEntities) {

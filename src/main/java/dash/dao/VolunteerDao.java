@@ -21,6 +21,8 @@ public interface VolunteerDao {
 	 * @return
 	 */
 	public VolunteerEntity getVolunteerById(Long id);
+
+	public List<ActivityEntity> getActivityByAppId(Long appId);
 	
 	public void deleteVolunteer(Volunteer volunteer);
 

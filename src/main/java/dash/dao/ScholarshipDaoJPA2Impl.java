@@ -44,6 +44,21 @@ public class ScholarshipDaoJPA2Impl implements ScholarshipDao {
 			return null;
 		}
 	}
+	
+	@Override
+	public List<ActivityEntity> getActivityByAppId(Long appId) {
+		
+		try {
+			String qlString = "SELECT u FROM ActivityEntity u WHERE u.application_id = ?1";
+			TypedQuery<ActivityEntity> query = entityManager.createQuery(
+					qlString, ActivityEntity.class);
+			query.setParameter(1, appId);
+
+			return query.getResultList();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
 
 	@Override
 	public void deleteScholarship(Scholarship scholarshipPojo) {

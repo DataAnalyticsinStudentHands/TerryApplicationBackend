@@ -44,7 +44,6 @@ public interface CourseworkService {
 	@PostFilter("hasRole('ROLE_ADMIN')")
 	public List<Coursework> getCourseworkByAppId(Long appId) throws AppException;
 
-	
 	/*
 	 * ******************** Update related methods **********************
 	 */

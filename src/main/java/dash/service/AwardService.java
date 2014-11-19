@@ -7,6 +7,7 @@ import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import dash.errorhandling.AppException;
+import dash.pojo.Activity;
 import dash.pojo.Award;
 
 public interface AwardService {
@@ -40,6 +41,9 @@ public interface AwardService {
 	 */
 	@PostAuthorize("hasPermission(returnObject, 'READ') or hasRole('ROLE_ADMIN')")
 	public Award getAwardById(Long id) throws AppException;
+	
+	@PostFilter("hasRole('ROLE_ADMIN')")
+	public List<Activity> getActivityByAppId(Long appId) throws AppException;
 	
 	/*
 	 * ******************** Update related methods **********************

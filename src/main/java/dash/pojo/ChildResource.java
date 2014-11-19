@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import dash.errorhandling.AppException;
+import dash.service.AwardService;
 import dash.service.ChildService;
 
 /**
@@ -74,6 +75,17 @@ public class ChildResource {
 				.header("Access-Control-Allow-Headers", "X-extra-header")
 				.allow("OPTIONS").build();
 	}
+	
+	@GET
+	@Path("list/{id}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public List<Activity> getActivityByApplicationId(@PathParam("id") Long appId) throws IOException,
+			AppException {
+		List<Activity> activity = activityService
+				.getActivityByAppId(appId);
+		return activity;
+	}
+
 
 	@PUT
 	@Path("{id}")

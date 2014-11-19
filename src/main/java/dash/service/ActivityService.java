@@ -29,8 +29,8 @@ public interface ActivityService {
 	 * @throws AppException
 	 */
 	@PostFilter("hasPermission(filterObject, 'READ') or hasRole('ROLE_ADMIN')")
-	public List<Activity> getActivity(String orderByInsertionDate) throws AppException;
-
+	public List<Activity> getActivity(String orderByInsertionDate) throws AppException;	
+	
 	/**
 	 * Returns activity given its id
 	 *
@@ -40,6 +40,9 @@ public interface ActivityService {
 	 */
 	@PostAuthorize("hasPermission(returnObject, 'READ') or hasRole('ROLE_ADMIN')")
 	public Activity getActivityById(Long id) throws AppException;
+	
+	@PostFilter("hasRole('ROLE_ADMIN')")
+	public List<Activity> getActivityByAppId(Long appId) throws AppException;
 	
 	/*
 	 * ******************** Update related methods **********************

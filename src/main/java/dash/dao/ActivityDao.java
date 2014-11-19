@@ -22,6 +22,8 @@ public interface ActivityDao {
 	 */
 	public ActivityEntity getActivityById(Long id);
 	
+	public List<ActivityEntity> getActivityByAppId(Long appId);
+	
 	public void deleteActivity(Activity activity);
 
 	public Long createActivity(ActivityEntity activity);

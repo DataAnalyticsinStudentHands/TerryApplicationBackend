@@ -44,6 +44,21 @@ public class ChildDaoJPA2Impl implements ChildDao {
 			return null;
 		}
 	}
+	
+	@Override
+	public List<ChildEntity> getChildByAppId(Long appId) {
+		
+		try {
+			String qlString = "SELECT u FROM ChildEntity u WHERE u.application_id = ?1";
+			TypedQuery<ChildEntity> query = entityManager.createQuery(
+					qlString, ChildEntity.class);
+			query.setParameter(1, appId);
+
+			return query.getResultList();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
 
 	@Override
 	public void deleteChild(Child childPojo) {

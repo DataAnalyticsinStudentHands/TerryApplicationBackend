@@ -21,6 +21,8 @@ public interface AwardDao {
 	 * @return
 	 */
 	public AwardEntity getAwardById(Long id);
+
+	public List<AwardEntity> getAwardByAppId(Long appId);
 	
 	public void deleteAward(Award award);
 

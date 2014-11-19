@@ -74,6 +74,17 @@ public class ScholarshipResource {
 				.header("Access-Control-Allow-Headers", "X-extra-header")
 				.allow("OPTIONS").build();
 	}
+	
+	@GET
+	@Path("list/{id}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public List<Activity> getActivityByApplicationId(@PathParam("id") Long appId) throws IOException,
+			AppException {
+		List<Activity> activity = activityService
+				.getActivityByAppId(appId);
+		return activity;
+	}
+
 
 	@PUT
 	@Path("{id}")

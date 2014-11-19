@@ -108,10 +108,9 @@ CourseworkService {
 	
 	@Override
 	public List<Coursework> getCourseworkByAppId(Long appId) throws AppException {
-
+		
 		List<CourseworkEntity> courseworks = courseworkDao.getCourseworkByAppId(appId);
 		
-
 		return getCourseworkFromEntities(courseworks);
 	}
 

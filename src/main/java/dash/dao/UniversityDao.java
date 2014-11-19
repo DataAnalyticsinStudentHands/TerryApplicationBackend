@@ -22,6 +22,8 @@ public interface UniversityDao {
 	 */
 	public UniversityEntity getUniversityById(Long id);
 	
+	public List<ActivityEntity> getActivityByAppId(Long appId);
+	
 	public void deleteUniversity(University university);
 
 	public Long createUniversity(UniversityEntity university);

@@ -21,6 +21,8 @@ public interface EmploymentDao {
 	 * @return
 	 */
 	public EmploymentEntity getEmploymentById(Long id);
+
+	public List<EmploymentEntity> getEmploymentByAppId(Long appId);
 	
 	public void deleteEmployment(Employment employment);
 

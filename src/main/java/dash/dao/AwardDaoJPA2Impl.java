@@ -44,6 +44,21 @@ public class AwardDaoJPA2Impl implements AwardDao {
 			return null;
 		}
 	}
+	
+	@Override
+	public List<AwardEntity> getAwardByAppId(Long appId) {
+		
+		try {
+			String qlString = "SELECT u FROM AwardEntity u WHERE u.application_id = ?1";
+			TypedQuery<AwardEntity> query = entityManager.createQuery(
+					qlString, AwardEntity.class);
+			query.setParameter(1, appId);
+
+			return query.getResultList();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
 
 	@Override
 	public void deleteAward(Award awardPojo) {

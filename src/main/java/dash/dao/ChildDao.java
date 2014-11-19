@@ -21,6 +21,8 @@ public interface ChildDao {
 	 * @return
 	 */
 	public ChildEntity getChildById(Long id);
+
+	public List<ChildEntity> getChildByAppId(Long appId);
 	
 	public void deleteChild(Child child);
 
