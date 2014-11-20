@@ -20,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import dash.errorhandling.AppException;
-import dash.service.AwardService;
 import dash.service.ChildService;
 
 /**
@@ -52,7 +51,7 @@ public class ChildResource {
 	}
 
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	@Produces({ MediaType.APPLICATION_JSON, })
 	public List<Child> getChild(
 			@QueryParam("orderByInsertionDate") String orderByInsertionDate)
 			throws IOException, AppException {
@@ -63,7 +62,7 @@ public class ChildResource {
 
 	@GET
 	@Path("{id}")
-	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	@Produces({ MediaType.APPLICATION_JSON, })
 	public Response getChildById(@PathParam("id") Long id,
 			@QueryParam("detailed") boolean detailed) throws IOException,
 			AppException {
@@ -79,11 +78,11 @@ public class ChildResource {
 	@GET
 	@Path("list/{id}")
 	@Produces({ MediaType.APPLICATION_JSON })
-	public List<Activity> getActivityByApplicationId(@PathParam("id") Long appId) throws IOException,
+	public List<Child> getChildByApplicationId(@PathParam("id") Long appId) throws IOException,
 			AppException {
-		List<Activity> activity = activityService
-				.getActivityByAppId(appId);
-		return activity;
+		List<Child> children = childService
+				.getChildByAppId(appId);
+		return children;
 	}
 
 

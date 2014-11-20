@@ -12,13 +12,11 @@ import org.springframework.context.support.ApplicationObjectSupport;
 import org.springframework.security.acls.model.MutableAclService;
 import org.springframework.transaction.annotation.Transactional;
 
-import dash.dao.ActivityEntity;
 import dash.dao.AwardDao;
 import dash.dao.AwardEntity;
 import dash.errorhandling.AppException;
 import dash.filters.AppConstants;
 import dash.helpers.NullAwareBeanUtilsBean;
-import dash.pojo.Activity;
 import dash.pojo.Award;
 import dash.security.CustomPermission;
 import dash.security.GenericAclController;
@@ -100,11 +98,11 @@ AwardService {
 	}
 	
 	@Override
-	public List<Activity> getActivityByAppId(Long appId) throws AppException {
+	public List<Award> getAwardByAppId(Long appId) throws AppException {
 		
-		List<ActivityEntity> activities = activityDao.getActivityByAppId(appId);
+		List<AwardEntity> award = awardDao.getAwardByAppId(appId);
 		
-		return getActivityFromEntities(activities);
+		return getAwardFromEntities(award);
 	}
 
 	private List<Award> getAwardFromEntities(List<AwardEntity> awardEntities) {

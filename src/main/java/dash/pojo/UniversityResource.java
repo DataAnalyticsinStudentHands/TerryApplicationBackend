@@ -51,7 +51,7 @@ public class UniversityResource {
 	}
 
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	@Produces({ MediaType.APPLICATION_JSON, })
 	public List<University> getUniversity(
 			@QueryParam("orderByInsertionDate") String orderByInsertionDate)
 			throws IOException, AppException {
@@ -62,7 +62,7 @@ public class UniversityResource {
 
 	@GET
 	@Path("{id}")
-	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	@Produces({ MediaType.APPLICATION_JSON, })
 	public Response getUniversityById(@PathParam("id") Long id,
 			@QueryParam("detailed") boolean detailed) throws IOException,
 			AppException {
@@ -78,11 +78,11 @@ public class UniversityResource {
 	@GET
 	@Path("list/{id}")
 	@Produces({ MediaType.APPLICATION_JSON })
-	public List<Activity> getActivityByApplicationId(@PathParam("id") Long appId) throws IOException,
+	public List<University> getUniversityByApplicationId(@PathParam("id") Long appId) throws IOException,
 			AppException {
-		List<Activity> activity = activityService
-				.getActivityByAppId(appId);
-		return activity;
+		List<University> universities = universityService
+				.getUniversityByAppId(appId);
+		return universities;
 	}
 
 

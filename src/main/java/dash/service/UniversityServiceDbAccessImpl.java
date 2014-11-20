@@ -12,13 +12,11 @@ import org.springframework.context.support.ApplicationObjectSupport;
 import org.springframework.security.acls.model.MutableAclService;
 import org.springframework.transaction.annotation.Transactional;
 
-import dash.dao.ActivityEntity;
 import dash.dao.UniversityDao;
 import dash.dao.UniversityEntity;
 import dash.errorhandling.AppException;
 import dash.filters.AppConstants;
 import dash.helpers.NullAwareBeanUtilsBean;
-import dash.pojo.Activity;
 import dash.pojo.University;
 import dash.security.CustomPermission;
 import dash.security.GenericAclController;
@@ -100,11 +98,11 @@ UniversityService {
 	}
 	
 	@Override
-	public List<Activity> getActivityByAppId(Long appId) throws AppException {
+	public List<University> getUniversityByAppId(Long appId) throws AppException {
 		
-		List<ActivityEntity> activities = activityDao.getActivityByAppId(appId);
+		List<UniversityEntity> universities = universityDao.getUniversityByAppId(appId);
 		
-		return getActivityFromEntities(activities);
+		return getUniversityFromEntities(universities);
 	}
 
 	private List<University> getUniversityFromEntities(List<UniversityEntity> universityEntities) {

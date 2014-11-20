@@ -51,7 +51,7 @@ public class ScholarshipResource {
 	}
 
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	@Produces({ MediaType.APPLICATION_JSON, })
 	public List<Scholarship> getScholarship(
 			@QueryParam("orderByInsertionDate") String orderByInsertionDate)
 			throws IOException, AppException {
@@ -62,7 +62,7 @@ public class ScholarshipResource {
 
 	@GET
 	@Path("{id}")
-	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	@Produces({ MediaType.APPLICATION_JSON, })
 	public Response getScholarshipById(@PathParam("id") Long id,
 			@QueryParam("detailed") boolean detailed) throws IOException,
 			AppException {
@@ -78,11 +78,11 @@ public class ScholarshipResource {
 	@GET
 	@Path("list/{id}")
 	@Produces({ MediaType.APPLICATION_JSON })
-	public List<Activity> getActivityByApplicationId(@PathParam("id") Long appId) throws IOException,
+	public List<Scholarship> getScholarshipByApplicationId(@PathParam("id") Long appId) throws IOException,
 			AppException {
-		List<Activity> activity = activityService
-				.getActivityByAppId(appId);
-		return activity;
+		List<Scholarship> scholarships = scholarshipService
+				.getScholarshipByAppId(appId);
+		return scholarships;
 	}
 
 

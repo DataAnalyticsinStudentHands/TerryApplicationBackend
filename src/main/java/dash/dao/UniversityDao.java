@@ -22,7 +22,7 @@ public interface UniversityDao {
 	 */
 	public UniversityEntity getUniversityById(Long id);
 	
-	public List<ActivityEntity> getActivityByAppId(Long appId);
+	public List<UniversityEntity> getUniversityByAppId(Long appId);
 	
 	public void deleteUniversity(University university);
 

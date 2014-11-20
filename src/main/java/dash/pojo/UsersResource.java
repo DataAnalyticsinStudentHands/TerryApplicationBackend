@@ -2,7 +2,6 @@ package dash.pojo;
 
 import java.io.IOException;
 import java.util.List;
-import java.io.File;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -311,7 +310,7 @@ public class UsersResource {
 		user.setId(id);
 		userService.deleteUser(user);
 		return Response.status(Response.Status.NO_CONTENT)// 204
-				.entity("User successfully removed from database").build();
+				.entity("User with ID: " + id + " successfully removed from database").build();
 	}
 
 	/*

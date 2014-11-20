@@ -7,7 +7,6 @@ import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import dash.errorhandling.AppException;
-import dash.pojo.Activity;
 import dash.pojo.University;
 
 public interface UniversityService {
@@ -52,7 +51,7 @@ public interface UniversityService {
 	public void updatePartiallyUniversity(University application) throws AppException;
 	
 	@PostFilter("hasRole('ROLE_ADMIN')")
-	public List<Activity> getActivityByAppId(Long appId) throws AppException;
+	public List<University> getUniversityByAppId(Long appId) throws AppException;
 	
 	/*
 	 * ******************** Delete related methods **********************

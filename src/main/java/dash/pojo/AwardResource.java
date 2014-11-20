@@ -51,7 +51,7 @@ public class AwardResource {
 	}
 
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	@Produces({ MediaType.APPLICATION_JSON, })
 	public List<Award> getAward(
 			@QueryParam("orderByInsertionDate") String orderByInsertionDate)
 			throws IOException, AppException {
@@ -62,7 +62,7 @@ public class AwardResource {
 
 	@GET
 	@Path("{id}")
-	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	@Produces({ MediaType.APPLICATION_JSON, })
 	public Response getAwardById(@PathParam("id") Long id,
 			@QueryParam("detailed") boolean detailed) throws IOException,
 			AppException {
@@ -73,6 +73,16 @@ public class AwardResource {
 				})
 				.header("Access-Control-Allow-Headers", "X-extra-header")
 				.allow("OPTIONS").build();
+	}
+	
+	@GET
+	@Path("list/{id}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public List<Award> getAwardByApplicationId(@PathParam("id") Long appId) throws IOException,
+			AppException {
+		List<Award> award = awardService
+				.getAwardByAppId(appId);
+		return award;
 	}
 
 	@PUT

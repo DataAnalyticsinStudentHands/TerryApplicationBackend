@@ -14,12 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import dash.dao.ActivityDao;
 import dash.dao.ActivityEntity;
-import dash.dao.CourseworkEntity;
 import dash.errorhandling.AppException;
 import dash.filters.AppConstants;
 import dash.helpers.NullAwareBeanUtilsBean;
 import dash.pojo.Activity;
-import dash.pojo.Coursework;
 import dash.security.CustomPermission;
 import dash.security.GenericAclController;
 

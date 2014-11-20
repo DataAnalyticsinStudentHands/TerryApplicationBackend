@@ -46,12 +46,12 @@ public class VolunteerDaoJPA2Impl implements VolunteerDao {
 	}
 	
 	@Override
-	public List<ActivityEntity> getActivityByAppId(Long appId) {
+	public List<VolunteerEntity> getVolunteerByAppId(Long appId) {
 		
 		try {
-			String qlString = "SELECT u FROM ActivityEntity u WHERE u.application_id = ?1";
-			TypedQuery<ActivityEntity> query = entityManager.createQuery(
-					qlString, ActivityEntity.class);
+			String qlString = "SELECT u FROM VolunteerEntity u WHERE u.application_id = ?1";
+			TypedQuery<VolunteerEntity> query = entityManager.createQuery(
+					qlString, VolunteerEntity.class);
 			query.setParameter(1, appId);
 
 			return query.getResultList();

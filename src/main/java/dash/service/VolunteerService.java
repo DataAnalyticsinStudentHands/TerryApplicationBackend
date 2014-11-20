@@ -7,7 +7,6 @@ import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import dash.errorhandling.AppException;
-import dash.pojo.Activity;
 import dash.pojo.Volunteer;
 
 public interface VolunteerService {
@@ -43,7 +42,7 @@ public interface VolunteerService {
 	public Volunteer getVolunteerById(Long id) throws AppException;
 	
 	@PostFilter("hasRole('ROLE_ADMIN')")
-	public List<Activity> getActivityByAppId(Long appId) throws AppException;
+	public List<Volunteer> getVolunteerByAppId(Long appId) throws AppException;
 	
 	/*
 	 * ******************** Update related methods **********************

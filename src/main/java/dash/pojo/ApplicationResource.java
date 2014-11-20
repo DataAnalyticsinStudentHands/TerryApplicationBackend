@@ -1,5 +1,6 @@
 package dash.pojo;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -17,6 +18,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -42,7 +44,6 @@ public class ApplicationResource {
 	@Autowired
 	private ApplicationService applicationService;
 
-	
 	@POST
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.TEXT_HTML })
@@ -59,7 +60,7 @@ public class ApplicationResource {
 	}
 
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	@Produces({ MediaType.APPLICATION_JSON, })
 	public List<Application> getApplications(
 			@QueryParam("orderByInsertionDate") String orderByInsertionDate)
 			throws IOException, AppException {
@@ -70,16 +71,14 @@ public class ApplicationResource {
 
 	@GET
 	@Path("{id}")
-	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	@Produces({ MediaType.APPLICATION_JSON, })
 	public Response getApplicationById(@PathParam("id") Long id,
 			@QueryParam("detailed") boolean detailed) throws IOException,
 			AppException {
 		Application applicaionById = applicationService.getApplicationById(id);
-		return Response
-				.status(200)
+		return Response.status(200)
 				.entity(new GenericEntity<Application>(applicaionById) {
-				})
-				.header("Access-Control-Allow-Headers", "X-extra-header")
+				}).header("Access-Control-Allow-Headers", "X-extra-header")
 				.allow("OPTIONS").build();
 	}
 
@@ -126,7 +125,7 @@ public class ApplicationResource {
 	@Produces({ MediaType.TEXT_HTML })
 	public Response partialUpdateApplication(@PathParam("id") Long id,
 			Application application) throws AppException {
-//		application.setId(id);
+		// application.setId(id);
 		applicationService.updatePartiallyApplication(application);
 		return Response
 				.status(Response.Status.OK)
@@ -134,80 +133,126 @@ public class ApplicationResource {
 				.entity("The application you specified has been successfully updated")
 				.build();
 	}
-	
+
 	@POST
 	@Path("/upload")
 	@Consumes({ MediaType.MULTIPART_FORM_DATA })
-	public Response uploadFile(
-			@QueryParam("id") Long id,
-		@FormDataParam("file") InputStream uploadedInputStream,
-		@FormDataParam("file") FormDataContentDisposition fileDetail,
-		@HeaderParam("Content-Length") final long fileSize) throws AppException {
-		
-		
-		
-		Application application= applicationService.getApplicationById(id);
-		
-		//TODO: Generate directory if not set
-		//if(application.getDocument_folder()==null)	
-		String uploadedFileLocation = AppConstants.APPLICATION_UPLOAD_LOCATION_FOLDER+"/"
-				+application.getDocument_folder()+"/" + fileDetail.getFileName().replaceAll("%20", "_").toLowerCase();;
+	public Response uploadFile(@QueryParam("id") Long id,
+			@FormDataParam("file") InputStream uploadedInputStream,
+			@FormDataParam("file") FormDataContentDisposition fileDetail,
+			@HeaderParam("Content-Length") final long fileSize)
+			throws AppException {
+
+		Application application = applicationService.getApplicationById(id);
+
+		// TODO: Generate directory if not set
+		// if(application.getDocument_folder()==null)
+		String uploadedFileLocation = AppConstants.APPLICATION_UPLOAD_LOCATION_FOLDER
+				+ "/"
+				+ application.getDocument_folder()
+				+ "/"
+				+ fileDetail.getFileName().replaceAll("%20", "_").toLowerCase();
+		;
 		// save it
-		applicationService.uploadFile(uploadedInputStream, uploadedFileLocation, application);
- 
+		applicationService.uploadFile(uploadedInputStream,
+				uploadedFileLocation, application);
+
 		String output = "File uploaded to : " + uploadedFileLocation;
- 
+
 		return Response.status(200).entity(output).build();
- 
+
 	}
-	
+
 	@GET
 	@Path("/upload")
-	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public Response getFileNames(@QueryParam("applicationId") Long id) throws AppException{
-		
-		Application application= applicationService.getApplicationById(id);
-		JaxbList<String> fileNames=new JaxbList<String>(applicationService.getFileNames(application));
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	public Response getFileNames(@QueryParam("applicationId") Long id)
+			throws AppException {
+
+		Application application = applicationService.getApplicationById(id);
+		JaxbList<String> fileNames = new JaxbList<String>(
+				applicationService.getFileNames(application));
 		return Response.status(200).entity(fileNames).build();
 	}
 	
-	//Gets a specific file and allows the user to download the pdf
 	@GET
-	@Path("/upload")
+	   @Path("/downloadFile")
+	   @Produces("application/msword")
+	public Response getWordFile(@QueryParam("applicationId") Long id,
+			@QueryParam("fileName") String fileName) throws AppException {
+
+		Application application = applicationService.getApplicationById(id);
+
+		if (application == null) {
+			return Response
+					.status(Response.Status.BAD_REQUEST)
+					.entity("Invalid applicationId, unable to locate application with id: "
+							+ id).build();
+		}
+
+		String uploadedFileLocation = AppConstants.APPLICATION_UPLOAD_LOCATION_FOLDER
+				+ application.getDocument_folder() + "/" + fileName;
+		
+		File file = new File(uploadedFileLocation);
+	      ResponseBuilder response = Response.ok((Object) file);
+	      response.header("Content-Disposition", "attachment; filename=" + fileName);
+	      return response.build();
+	   }
+
+	// Gets a specific file and allows the user to download the pdf
+	@GET
+	@Path("/download")
 	public Response getFile(@QueryParam("applicationId") Long id,
 			@QueryParam("fileName") String fileName) throws AppException {
-		
-		Application application= applicationService.getApplicationById(id);
-		
-		if(application==null){
-			return Response.status(Response.Status.BAD_REQUEST)
-					.entity("Invalid applicationId, unable to locate application with id: "+id).build();
+
+		Application application = applicationService.getApplicationById(id);
+
+		if (application == null) {
+			return Response
+					.status(Response.Status.BAD_REQUEST)
+					.entity("Invalid applicationId, unable to locate application with id: "
+							+ id).build();
 		}
+
+		String uploadedFileLocation = AppConstants.APPLICATION_UPLOAD_LOCATION_FOLDER
+				+ application.getDocument_folder() + "/" + fileName;
 		
-		String uploadedFileLocation = AppConstants.APPLICATION_UPLOAD_LOCATION_FOLDER+application.getDocument_folder()+"/" + fileName;
-		
-		
-		return Response.ok(applicationService.getUploadFile(uploadedFileLocation, application))
-				.type("application/pdf").build(); 
+
+		String ext = "";
+
+		if (fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
+			ext = fileName.substring(fileName.lastIndexOf("."));
+
+		if (ext.equals(".pdf")) {
+			return Response
+					.ok(applicationService.getUploadFile(uploadedFileLocation,
+							application)).type("application/pdf").build();
+		} else {
+			String generatedFileLocation = AppConstants.APPLICATION_UPLOAD_LOCATION_FOLDER
+					+ application.getDocument_folder() + "/generated/" + fileName.replace(ext, ".pdf");
+			applicationService.createPDF(uploadedFileLocation, generatedFileLocation);
+			return Response
+					.ok(applicationService.getUploadFile(generatedFileLocation,
+							application)).type("application/pdf").build();
+		}
 	}
-	
+
 	@DELETE
 	@Path("/upload")
-	public Response deleteUpload(
-			@QueryParam("applicationId") Long id,
-			@QueryParam("fileName") String fileName) throws AppException{
-		
-		Application application= applicationService.getApplicationById(id);
-		
-		String uploadedFileLocation = AppConstants.APPLICATION_UPLOAD_LOCATION_FOLDER+application.getDocument_folder()+"/" + fileName;
+	public Response deleteUpload(@QueryParam("applicationId") Long id,
+			@QueryParam("fileName") String fileName) throws AppException {
+
+		Application application = applicationService.getApplicationById(id);
+
+		String uploadedFileLocation = AppConstants.APPLICATION_UPLOAD_LOCATION_FOLDER
+				+ application.getDocument_folder() + "/" + fileName;
 		// save it
 		applicationService.deleteUploadFile(uploadedFileLocation, application);
- 
+
 		String output = "File removed from: " + uploadedFileLocation;
-		
+
 		return Response.status(200).entity(output).build();
 	}
-		
 
 	/*
 	 * *********************************** DELETE
@@ -237,21 +282,22 @@ public class ApplicationResource {
 				.entity("All applications have been successfully removed")
 				.build();
 	}
-	
-	@XmlRootElement(name="fileNames")
-	public static class JaxbList<T>{
-	    protected List<T> list;
 
-	    public JaxbList(){}
+	@XmlRootElement(name = "fileNames")
+	public static class JaxbList<T> {
+		protected List<T> list;
 
-	    public JaxbList(List<T> list){
-	    	this.list=list;
-	    }
+		public JaxbList() {
+		}
 
-	    @XmlElement(name="fileName")
-	    public List<T> getList(){
-	    	return list;
-	    }
+		public JaxbList(List<T> list) {
+			this.list = list;
+		}
+
+		@XmlElement(name = "fileName")
+		public List<T> getList() {
+			return list;
+		}
 	}
 
 }

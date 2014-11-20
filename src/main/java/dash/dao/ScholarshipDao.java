@@ -22,7 +22,7 @@ public interface ScholarshipDao {
 	 */
 	public ScholarshipEntity getScholarshipById(Long id);
 
-	public List<ActivityEntity> getActivityByAppId(Long appId);
+	public List<ScholarshipEntity> getScholarshipByAppId(Long appId);
 	
 	public void deleteScholarship(Scholarship scholarship);
 

@@ -7,7 +7,6 @@ import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import dash.errorhandling.AppException;
-import dash.pojo.Activity;
 import dash.pojo.Employment;
 
 public interface EmploymentService {
@@ -43,7 +42,7 @@ public interface EmploymentService {
 	public Employment getEmploymentById(Long id) throws AppException;
 	
 	@PostFilter("hasRole('ROLE_ADMIN')")
-	public List<Activity> getActivityByAppId(Long appId) throws AppException;
+	public List<Employment> getEmploymentByAppId(Long appId) throws AppException;
 	
 	/*
 	 * ******************** Update related methods **********************
