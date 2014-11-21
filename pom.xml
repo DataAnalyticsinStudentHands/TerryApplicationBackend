@@ -222,12 +222,18 @@
 			<artifactId>spring-context-support</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-		
+
 		<!-- WordToPdf dependencies -->
 		<dependency>
 			<groupId>fr.opensagres.xdocreport</groupId>
 			<artifactId>org.apache.poi.xwpf.converter.pdf</artifactId>
 			<version>1.0.0</version>
+		</dependency>
+		<!-- ApacheCommons IO -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.4</version>
 		</dependency>
 	</dependencies>
 

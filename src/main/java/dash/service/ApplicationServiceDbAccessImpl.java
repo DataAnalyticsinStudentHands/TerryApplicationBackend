@@ -35,8 +35,8 @@ import dash.pojo.Application;
 import dash.security.CustomPermission;
 import dash.security.GenericAclController;
 
-public class ApplicationServiceDbAccessImpl extends ApplicationObjectSupport implements
-ApplicationService {
+public class ApplicationServiceDbAccessImpl extends ApplicationObjectSupport
+		implements ApplicationService {
 
 	@Autowired
 	ApplicationDao applicationDao;
@@ -47,7 +47,6 @@ ApplicationService {
 	@Autowired
 	private GenericAclController<Application> aclController;
 
-
 	/********************* Create related methods implementation ***********************/
 	@Override
 	@Transactional
@@ -55,48 +54,54 @@ ApplicationService {
 
 		validateInputForCreation(application);
 
-		//ToDo: verify existence of resource in the db (feed must be unique)
-		//ApplicationEntity applicationByName = applicationDao.getApplicationByName(application.getName());
-		/*if (applicationByName != null) {
-			throw new AppException(
-					Response.Status.CONFLICT.getStatusCode(),
-					409,
-					"Object with name already existing in the database with the id "
-							+ applicationByName.getId(),
-							"Please verify that the name are properly generated",
-							AppConstants.DASH_POST_URL);
-		}*/
+		// ToDo: verify existence of resource in the db (feed must be unique)
+		// ApplicationEntity applicationByName =
+		// applicationDao.getApplicationByName(application.getName());
+		/*
+		 * if (applicationByName != null) { throw new AppException(
+		 * Response.Status.CONFLICT.getStatusCode(), 409,
+		 * "Object with name already existing in the database with the id " +
+		 * applicationByName.getId(),
+		 * "Please verify that the name are properly generated",
+		 * AppConstants.DASH_POST_URL); }
+		 */
 
-		long applicationId = applicationDao.createApplication(new ApplicationEntity(application));
+		long applicationId = applicationDao
+				.createApplication(new ApplicationEntity(application));
 		application.setId(applicationId);
-		
+
 		aclController.createACL(application);
 		aclController.createAce(application, CustomPermission.READ);
 		aclController.createAce(application, CustomPermission.WRITE);
 		aclController.createAce(application, CustomPermission.DELETE);
-		
+
 		return applicationId;
 	}
 
-	private void validateInputForCreation(Application application) throws AppException {
-		if (application.getFirst_name() == null || application.getLast_name() == null || application.getUh_id() == null) {
-			throw new AppException(Response.Status.BAD_REQUEST.getStatusCode(), 400, "Provided data not sufficient for insertion",
+	private void validateInputForCreation(Application application)
+			throws AppException {
+		if (application.getFirst_name() == null
+				|| application.getLast_name() == null
+				|| application.getUh_id() == null) {
+			throw new AppException(Response.Status.BAD_REQUEST.getStatusCode(),
+					400, "Provided data not sufficient for insertion",
 					"Please verify that the name is properly generated/set",
 					AppConstants.DASH_POST_URL);
-		}		
+		}
 	}
-	
+
 	// save uploaded file to new location
 	public void uploadFile(InputStream uploadedInputStream,
-		String uploadedFileLocation, Application application) throws AppException{
- 
+			String uploadedFileLocation, Application application)
+			throws AppException {
+
 		try {
-			File file= new File(uploadedFileLocation);
+			File file = new File(uploadedFileLocation);
 			file.getParentFile().mkdirs();
 			OutputStream out = new FileOutputStream(file);
 			int read = 0;
 			byte[] bytes = new byte[1024];
-			
+
 			out = new FileOutputStream(new File(uploadedFileLocation));
 			while ((read = uploadedInputStream.read(bytes)) != -1) {
 				out.write(bytes, 0, read);
@@ -104,87 +109,110 @@ ApplicationService {
 			out.flush();
 			out.close();
 		} catch (IOException e) {
- 
-			throw new AppException(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), 500, "Could not upload file due to IOException",
-					"\n\n"+e.getMessage(),
-					AppConstants.DASH_POST_URL);
+
+			throw new AppException(
+					Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), 500,
+					"Could not upload file due to IOException", "\n\n"
+							+ e.getMessage(), AppConstants.DASH_POST_URL);
 		}
- 
+
 	}
-	
-	// save uploaded file to new location
+
+	/**
+	 * Generate PDF from word files docx
+	 */
 	@Override
-	public void createPDF(String inputFilePath, String outputFilePath) {
-		
-	
-				try {
-					long start = System.currentTimeMillis();
+	public void createPDF(String inputFilePath, String outputFilePath)
+			throws AppException {
 
-					// 1) Load DOCX into XWPFDocument
-					InputStream is = new FileInputStream(new File(
-							inputFilePath));
-					XWPFDocument document = new XWPFDocument(is);
+		// check whether we already have a generated pdf
+		File outputTest = new File(outputFilePath);
 
-					// 2) Prepare Pdf options
-					PdfOptions options = PdfOptions.create();
+		if (!outputTest.exists()) {
+			if (!outputTest.getParentFile().exists()) {
+				outputTest.getParentFile().mkdir();
+			} else {
+				//todo check for newer version
+			}
+		} else {
+			try {
+				long start = System.currentTimeMillis();
 
-					// 3) Convert XWPFDocument to Pdf
-					OutputStream out = new FileOutputStream(new File(
-							outputFilePath));
-					PdfConverter.getInstance().convert(document, out, options);
-					
-					System.err.println("Generate pdf/HelloWorld.pdf with "
-							+ (System.currentTimeMillis() - start) + "ms");
-					
-				} catch (Throwable e) {
-					e.printStackTrace();
-				}
-	 
+				// 1) Load DOCX into XWPFDocument
+				InputStream is = new FileInputStream(new File(inputFilePath));
+				XWPFDocument document = new XWPFDocument(is);
+
+				// 2) Prepare Pdf options
+				PdfOptions options = PdfOptions.create();
+
+				// 3) Convert XWPFDocument to Pdf
+				OutputStream out = new FileOutputStream(
+						new File(outputFilePath));
+				PdfConverter.getInstance().convert(document, out, options);
+
+				logger.debug("Generated " + outputFilePath + " in "
+						+ (System.currentTimeMillis() - start) + "ms");
+
+			} catch (Throwable e) {
+				logger.debug("Could not generate the pdf from word file."
+						+ inputFilePath + "\n" + e.getMessage());
+				throw new AppException(
+						Response.Status.BAD_REQUEST.getStatusCode(),
+						AppConstants.GENERIC_APP_ERROR_CODE,
+						"Could not generate the pdf from word file.", null,
+						AppConstants.DASH_POST_URL);
+			}
 		}
-	
+	}
+
 	public File getUploadFile(String uploadedFileLocation,
 			Application application) throws AppException {
-		return new File(uploadedFileLocation); 
+		return new File(uploadedFileLocation);
 	}
 
-		// ******************** Read related methods implementation **********************
+	// ******************** Read related methods implementation
+	// **********************
 	@Override
-	public List<Application> getApplications(String orderByInsertionDate) throws AppException {
+	public List<Application> getApplications(String orderByInsertionDate)
+			throws AppException {
 
-		if(isOrderByInsertionDateParameterValid(orderByInsertionDate)){
+		if (isOrderByInsertionDateParameterValid(orderByInsertionDate)) {
 			throw new AppException(
 					Response.Status.BAD_REQUEST.getStatusCode(),
 					400,
 					"Please set either ASC or DESC for the orderByInsertionDate parameter",
 					null, AppConstants.DASH_POST_URL);
 		}
-		List<ApplicationEntity> applictions = applicationDao.getApplications(orderByInsertionDate);
+		List<ApplicationEntity> applictions = applicationDao
+				.getApplications(orderByInsertionDate);
 
 		return getApplicationsFromEntities(applictions);
 	}
 
 	private boolean isOrderByInsertionDateParameterValid(
 			String orderByInsertionDate) {
-		return orderByInsertionDate!=null
-				&& !("ASC".equalsIgnoreCase(orderByInsertionDate) || "DESC".equalsIgnoreCase(orderByInsertionDate));
+		return orderByInsertionDate != null
+				&& !("ASC".equalsIgnoreCase(orderByInsertionDate) || "DESC"
+						.equalsIgnoreCase(orderByInsertionDate));
 	}
 
 	@Override
 	public Application getApplicationById(Long id) throws AppException {
-		ApplicationEntity applicationById = applicationDao.getApplicationById(id);
+		ApplicationEntity applicationById = applicationDao
+				.getApplicationById(id);
 		if (applicationById == null) {
 			throw new AppException(Response.Status.NOT_FOUND.getStatusCode(),
-					404,
-					"The object you requested with id " + id
-					+ " was not found in the database",
+					404, "The object you requested with id " + id
+							+ " was not found in the database",
 					"Verify the existence of the object with the id " + id
-					+ " in the database", AppConstants.DASH_POST_URL);
+							+ " in the database", AppConstants.DASH_POST_URL);
 		}
 
 		return new Application(applicationDao.getApplicationById(id));
 	}
 
-	private List<Application> getApplicationsFromEntities(List<ApplicationEntity> applicationEntities) {
+	private List<Application> getApplicationsFromEntities(
+			List<ApplicationEntity> applicationEntities) {
 		List<Application> response = new ArrayList<Application>();
 		for (ApplicationEntity applicationEntity : applicationEntities) {
 			response.add(new Application(applicationEntity));
@@ -196,32 +224,32 @@ ApplicationService {
 	/********************* UPDATE-related methods implementation ***********************/
 	@Override
 	@Transactional
-	public void updateFullyApplication(Application application) throws AppException {
-		//do a validation to verify FULL update with PUT
+	public void updateFullyApplication(Application application)
+			throws AppException {
+		// do a validation to verify FULL update with PUT
 		if (isFullUpdate(application)) {
 			throw new AppException(Response.Status.BAD_REQUEST.getStatusCode(),
-					400,
-					"Please specify all properties for Full UPDATE",
-					"required properties - name",
-					AppConstants.DASH_POST_URL);
+					400, "Please specify all properties for Full UPDATE",
+					"required properties - name", AppConstants.DASH_POST_URL);
 		}
 
 		Application verifyApplicationExistenceById = verifyApplicationExistenceById(application
 				.getId());
 		if (verifyApplicationExistenceById == null) {
-			throw new AppException(Response.Status.NOT_FOUND.getStatusCode(),
+			throw new AppException(
+					Response.Status.NOT_FOUND.getStatusCode(),
 					404,
 					"The resource you are trying to update does not exist in the database",
 					"Please verify existence of data in the database for the id - "
-							+ application.getId(),
-							AppConstants.DASH_POST_URL);
+							+ application.getId(), AppConstants.DASH_POST_URL);
 		}
 
 		applicationDao.updateApplication(new ApplicationEntity(application));
 	}
 
 	/**
-	 * Verifies the "completeness" of the application resource sent over the wire
+	 * Verifies the "completeness" of the application resource sent over the
+	 * wire
 	 *
 	 * @param Application
 	 * @return
@@ -251,7 +279,8 @@ ApplicationService {
 	// TODO: This doesn't need to exist. It is the exact same thing as
 	// getApplicationById(Long)
 	public Application verifyApplicationExistenceById(Long id) {
-		ApplicationEntity applicationById = applicationDao.getApplicationById(id);
+		ApplicationEntity applicationById = applicationDao
+				.getApplicationById(id);
 		if (applicationById == null) {
 			return null;
 		} else {
@@ -261,27 +290,30 @@ ApplicationService {
 
 	@Override
 	@Transactional
-	public void updatePartiallyApplication(Application application) throws AppException {
-		//do a validation to verify existence of the resource
-		Application verifyApplicationExistenceById = verifyApplicationExistenceById(application.getId());
+	public void updatePartiallyApplication(Application application)
+			throws AppException {
+		// do a validation to verify existence of the resource
+		Application verifyApplicationExistenceById = verifyApplicationExistenceById(application
+				.getId());
 		if (verifyApplicationExistenceById == null) {
-			throw new AppException(Response.Status.NOT_FOUND.getStatusCode(),
+			throw new AppException(
+					Response.Status.NOT_FOUND.getStatusCode(),
 					404,
 					"The resource you are trying to update does not exist in the database",
 					"Please verify existence of data in the database for the id - "
 							+ application.getId(), AppConstants.DASH_POST_URL);
 		}
 		copyPartialProperties(verifyApplicationExistenceById, application);
-		
-		applicationDao.updateApplication(new ApplicationEntity(verifyApplicationExistenceById));
-		
-		
+
+		applicationDao.updateApplication(new ApplicationEntity(
+				verifyApplicationExistenceById));
 
 	}
 
-	private void copyPartialProperties(Application verifyApplicationExistenceById, Application application) {
+	private void copyPartialProperties(
+			Application verifyApplicationExistenceById, Application application) {
 
-		BeanUtilsBean notNull=new NullAwareBeanUtilsBean();
+		BeanUtilsBean notNull = new NullAwareBeanUtilsBean();
 		try {
 			notNull.copyProperties(verifyApplicationExistenceById, application);
 		} catch (IllegalAccessException e) {
@@ -298,47 +330,50 @@ ApplicationService {
 			Application application) throws AppException {
 		Path path = Paths.get(uploadedFileLocation);
 		try {
-		    Files.delete(path);
+			Files.delete(path);
 		} catch (NoSuchFileException x) {
 			x.printStackTrace();
 			throw new AppException(Response.Status.NOT_FOUND.getStatusCode(),
-					404,
-					"NoSuchFileException thrown, Operation unsuccesful.", "Please ensure the file you are attempting to"
-					+ " delete exists at "+path+".", AppConstants.DASH_POST_URL);
-			
-					
+					404, "NoSuchFileException thrown, Operation unsuccesful.",
+					"Please ensure the file you are attempting to"
+							+ " delete exists at " + path + ".",
+					AppConstants.DASH_POST_URL);
+
 		} catch (DirectoryNotEmptyException x) {
 			x.printStackTrace();
-			throw new AppException(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(),
+			throw new AppException(
+					Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(),
 					404,
-					"DirectoryNotEmptyException thrown, operation unsuccesful.", "This method should not attempt to delete,"
-							+ " This should be considered a very serious error. Occured at "+path+".",
-					AppConstants.DASH_POST_URL);
+					"DirectoryNotEmptyException thrown, operation unsuccesful.",
+					"This method should not attempt to delete,"
+							+ " This should be considered a very serious error. Occured at "
+							+ path + ".", AppConstants.DASH_POST_URL);
 		} catch (IOException x) {
 			x.printStackTrace();
-			throw new AppException(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(),
+			throw new AppException(
+					Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(),
 					500,
-					"IOException thrown and the designated file was not deleted.", 
-					" Permission problems occured at "+path+".",
+					"IOException thrown and the designated file was not deleted.",
+					" Permission problems occured at " + path + ".",
 					AppConstants.DASH_POST_URL);
 		}
-		
+
 	}
 
 	@Override
 	public List<String> getFileNames(Application application) {
 		List<String> results = new ArrayList<String>();
 
-		
-		
-		File[] files = new File(AppConstants.APPLICATION_UPLOAD_LOCATION_FOLDER+"/"+application.getDocument_folder()).listFiles();
-		//If this pathname does not denote a directory, then listFiles() returns null. 
+		File[] files = new File(AppConstants.APPLICATION_UPLOAD_LOCATION_FOLDER
+				+ "/" + application.getDocument_folder()).listFiles();
+		// If this pathname does not denote a directory, then listFiles()
+		// returns null.
 
-		if(files != null){
+		if (files != null) {
 			for (File file : files) {
-			    if (file.isFile()) {
-			        results.add(file.getName());
-			    }
+				if (file.isFile()) {
+					results.add(file.getName());
+				}
 			}
 		}
 		return results;

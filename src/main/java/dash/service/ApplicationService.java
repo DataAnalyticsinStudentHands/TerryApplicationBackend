@@ -50,7 +50,7 @@ public interface ApplicationService {
 	@PreAuthorize("hasPermission(#application, 'read') or hasRole('ROLE_ADMIN')")
 	public File getUploadFile(String uploadedFileLocation, Application application) throws AppException;
 	
-	public void createPDF(String inputFilePath, String outputFilePath);
+	public void createPDF(String inputFilePath, String outputFilePath) throws AppException;
 	
 	/*
 	 * ******************** Update related methods **********************

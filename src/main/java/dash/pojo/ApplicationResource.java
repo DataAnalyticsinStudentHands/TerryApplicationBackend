@@ -1,6 +1,7 @@
 package dash.pojo;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -26,6 +27,7 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.apache.commons.io.filefilter.*;
 
 import dash.errorhandling.AppException;
 import dash.filters.AppConstants;
@@ -174,30 +176,6 @@ public class ApplicationResource {
 				applicationService.getFileNames(application));
 		return Response.status(200).entity(fileNames).build();
 	}
-	
-	@GET
-	   @Path("/downloadFile")
-	   @Produces("application/msword")
-	public Response getWordFile(@QueryParam("applicationId") Long id,
-			@QueryParam("fileName") String fileName) throws AppException {
-
-		Application application = applicationService.getApplicationById(id);
-
-		if (application == null) {
-			return Response
-					.status(Response.Status.BAD_REQUEST)
-					.entity("Invalid applicationId, unable to locate application with id: "
-							+ id).build();
-		}
-
-		String uploadedFileLocation = AppConstants.APPLICATION_UPLOAD_LOCATION_FOLDER
-				+ application.getDocument_folder() + "/" + fileName;
-		
-		File file = new File(uploadedFileLocation);
-	      ResponseBuilder response = Response.ok((Object) file);
-	      response.header("Content-Disposition", "attachment; filename=" + fileName);
-	      return response.build();
-	   }
 
 	// Gets a specific file and allows the user to download the pdf
 	@GET
@@ -213,15 +191,18 @@ public class ApplicationResource {
 					.entity("Invalid applicationId, unable to locate application with id: "
 							+ id).build();
 		}
-
-		String uploadedFileLocation = AppConstants.APPLICATION_UPLOAD_LOCATION_FOLDER
-				+ application.getDocument_folder() + "/" + fileName;
 		
+		File dir = new File (AppConstants.APPLICATION_UPLOAD_LOCATION_FOLDER
+				+ application.getDocument_folder());
+		FileFilter fileFilter = new WildcardFileFilter(fileName);
+		File[] files = dir.listFiles(fileFilter);
+
+		String uploadedFileLocation = files[0].getAbsolutePath();		
 
 		String ext = "";
 
-		if (fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
-			ext = fileName.substring(fileName.lastIndexOf("."));
+		if (uploadedFileLocation.lastIndexOf(".") != -1 && uploadedFileLocation.lastIndexOf(".") != 0)
+			ext = uploadedFileLocation.substring(uploadedFileLocation.lastIndexOf("."));
 
 		if (ext.equals(".pdf")) {
 			return Response
@@ -229,7 +210,7 @@ public class ApplicationResource {
 							application)).type("application/pdf").build();
 		} else {
 			String generatedFileLocation = AppConstants.APPLICATION_UPLOAD_LOCATION_FOLDER
-					+ application.getDocument_folder() + "/generated/" + fileName.replace(ext, ".pdf");
+					+ application.getDocument_folder() + "/generated/" + files[0].getName().replace(ext, ".pdf");
 			applicationService.createPDF(uploadedFileLocation, generatedFileLocation);
 			return Response
 					.ok(applicationService.getUploadFile(generatedFileLocation,
