@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -19,7 +21,6 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -70,6 +71,18 @@ public class ApplicationResource {
 				.getApplications(orderByInsertionDate);
 		return applications;
 	}
+	
+	@GET
+	@Path("/withfilenames")
+	@Produces({ MediaType.APPLICATION_JSON, })
+	public List<Application> getApplicationsWithFileNames(
+			@QueryParam("orderByInsertionDate") String orderByInsertionDate)
+			throws IOException, AppException {
+		List<Application> applications = applicationService
+				.getApplicationsWithFileNames();
+		return applications;
+	}
+
 
 	@GET
 	@Path("{id}")
@@ -191,30 +204,43 @@ public class ApplicationResource {
 					.entity("Invalid applicationId, unable to locate application with id: "
 							+ id).build();
 		}
-		
-		File dir = new File (AppConstants.APPLICATION_UPLOAD_LOCATION_FOLDER
+
+		File dir = new File(AppConstants.APPLICATION_UPLOAD_LOCATION_FOLDER
 				+ application.getDocument_folder());
 		FileFilter fileFilter = new WildcardFileFilter(fileName);
 		File[] files = dir.listFiles(fileFilter);
 
-		String uploadedFileLocation = files[0].getAbsolutePath();		
+		if (files != null) {
 
-		String ext = "";
+			String uploadedFileLocation = files[0].getAbsolutePath();
 
-		if (uploadedFileLocation.lastIndexOf(".") != -1 && uploadedFileLocation.lastIndexOf(".") != 0)
-			ext = uploadedFileLocation.substring(uploadedFileLocation.lastIndexOf("."));
+			String ext = "";
 
-		if (ext.equals(".pdf")) {
-			return Response
-					.ok(applicationService.getUploadFile(uploadedFileLocation,
-							application)).type("application/pdf").build();
+			if (uploadedFileLocation.lastIndexOf(".") != -1
+					&& uploadedFileLocation.lastIndexOf(".") != 0)
+				ext = uploadedFileLocation.substring(uploadedFileLocation
+						.lastIndexOf("."));
+
+			if (ext.equals(".pdf")) {
+				return Response
+						.ok(applicationService.getUploadFile(
+								uploadedFileLocation, application))
+						.type("application/pdf").build();
+			} else {
+				String generatedFileLocation = AppConstants.APPLICATION_UPLOAD_LOCATION_FOLDER
+						+ application.getDocument_folder()
+						+ "/generated/"
+						+ files[0].getName().replace(ext, ".pdf");
+				applicationService.createPDF(uploadedFileLocation,
+						generatedFileLocation);
+				return Response
+						.ok(applicationService.getUploadFile(
+								generatedFileLocation, application))
+						.type("application/pdf").build();
+			}
 		} else {
-			String generatedFileLocation = AppConstants.APPLICATION_UPLOAD_LOCATION_FOLDER
-					+ application.getDocument_folder() + "/generated/" + files[0].getName().replace(ext, ".pdf");
-			applicationService.createPDF(uploadedFileLocation, generatedFileLocation);
-			return Response
-					.ok(applicationService.getUploadFile(generatedFileLocation,
-							application)).type("application/pdf").build();
+			return Response.status(Response.Status.BAD_REQUEST)
+					.entity("No files uploaded.").build();
 		}
 	}
 

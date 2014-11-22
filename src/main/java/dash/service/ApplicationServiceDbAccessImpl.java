@@ -13,6 +13,7 @@ import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.ws.rs.core.Response;
@@ -117,6 +118,20 @@ public class ApplicationServiceDbAccessImpl extends ApplicationObjectSupport
 		}
 
 	}
+	
+	@Override
+	public List<Application> getApplicationsWithFileNames() throws AppException {
+		List<Application> applications = getApplications(null);
+		
+		for(Iterator<Application> i = applications.iterator(); i.hasNext(); ) {
+		    Application item = i.next();
+		    List<String> files = new ArrayList<String>();
+		    files.addAll(getFileNames(item));
+		    item.setFile_names(files);
+		}
+		
+		return applications;
+	}
 
 	/**
 	 * Generate PDF from word files docx
@@ -131,38 +146,43 @@ public class ApplicationServiceDbAccessImpl extends ApplicationObjectSupport
 		if (!outputTest.exists()) {
 			if (!outputTest.getParentFile().exists()) {
 				outputTest.getParentFile().mkdir();
-			} else {
-				//todo check for newer version
-			}
+			} 
 		} else {
-			try {
-				long start = System.currentTimeMillis();
-
-				// 1) Load DOCX into XWPFDocument
-				InputStream is = new FileInputStream(new File(inputFilePath));
-				XWPFDocument document = new XWPFDocument(is);
-
-				// 2) Prepare Pdf options
-				PdfOptions options = PdfOptions.create();
-
-				// 3) Convert XWPFDocument to Pdf
-				OutputStream out = new FileOutputStream(
-						new File(outputFilePath));
-				PdfConverter.getInstance().convert(document, out, options);
-
-				logger.debug("Generated " + outputFilePath + " in "
-						+ (System.currentTimeMillis() - start) + "ms");
-
-			} catch (Throwable e) {
-				logger.debug("Could not generate the pdf from word file."
-						+ inputFilePath + "\n" + e.getMessage());
-				throw new AppException(
-						Response.Status.BAD_REQUEST.getStatusCode(),
-						AppConstants.GENERIC_APP_ERROR_CODE,
-						"Could not generate the pdf from word file.", null,
-						AppConstants.DASH_POST_URL);
-			}
+			//check whether generated file is older than current uploaded file
+			File inputTest = new File (inputFilePath);
+			if (inputTest.lastModified() < outputTest.lastModified()) {
+				return;
+			}				
 		}
+		
+		try {
+			long start = System.currentTimeMillis();
+
+			// 1) Load DOCX into XWPFDocument
+			InputStream is = new FileInputStream(new File(inputFilePath));
+			XWPFDocument document = new XWPFDocument(is);
+
+			// 2) Prepare Pdf options
+			PdfOptions options = PdfOptions.create();
+
+			// 3) Convert XWPFDocument to Pdf
+			OutputStream out = new FileOutputStream(
+					new File(outputFilePath));
+			PdfConverter.getInstance().convert(document, out, options);
+
+			logger.debug("Generated " + outputFilePath + " in "
+					+ (System.currentTimeMillis() - start) + "ms");
+
+		} catch (Throwable e) {
+			logger.debug("Could not generate the pdf from word file."
+					+ inputFilePath + "\n" + e.getMessage());
+			throw new AppException(
+					Response.Status.BAD_REQUEST.getStatusCode(),
+					AppConstants.GENERIC_APP_ERROR_CODE,
+					"Could not generate the pdf from word file.", null,
+					AppConstants.DASH_POST_URL);
+		}
+			
 	}
 
 	public File getUploadFile(String uploadedFileLocation,
@@ -378,4 +398,6 @@ public class ApplicationServiceDbAccessImpl extends ApplicationObjectSupport
 		}
 		return results;
 	}
+
+	
 }

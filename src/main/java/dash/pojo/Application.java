@@ -15,6 +15,7 @@ import dash.helpers.SimpleDateAdapter;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
+import java.util.List;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -383,6 +384,9 @@ public class Application implements  Serializable, IAclObject{
 	@XmlJavaTypeAdapter(SimpleDateAdapter.class)
 	@XmlElement(name = "housing_date_int_sub")
 	private Date housing_date_int_sub;
+	
+	@XmlElement(name = "file_names")
+	private List<String> file_names;
 	  
 	public Application(){}
 	
@@ -1334,6 +1338,11 @@ public class Application implements  Serializable, IAclObject{
 		this.housing_date_int_sub = housing_date_int_sub;
 	}
 
-	
+	public List<String> getFile_names() {
+		return file_names;
+	}
 
+	public void setFile_names(List<String> file_names) {
+		this.file_names = file_names;
+	}
 }
