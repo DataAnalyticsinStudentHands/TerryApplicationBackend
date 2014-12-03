@@ -126,7 +126,7 @@ public class ApplicationEntity implements Serializable {
 	private Float highschool_gpa;
 
 	@Column(name = "highschool_scale")
-	private Float highschool_scale;
+	private String highschool_scale;
 
 	@Column(name = "highschool_graduation_date")
 	private Date highschool_graduation_date;
@@ -654,11 +654,11 @@ public class ApplicationEntity implements Serializable {
 		this.highschool_gpa = highschool_gpa;
 	}
 
-	public Float getHighschool_scale() {
+	public String getHighschool_scale() {
 		return highschool_scale;
 	}
 
-	public void setHighschool_scale(Float highschool_scale) {
+	public void setHighschool_scale(String highschool_scale) {
 		this.highschool_scale = highschool_scale;
 	}
 

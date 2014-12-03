@@ -119,7 +119,7 @@ public class Application implements  Serializable, IAclObject{
 	private Float highschool_gpa;
 	
 	@XmlElement(name = "highschool_scale")
-	private Float highschool_scale;
+	private String highschool_scale;
 	
 	@XmlJavaTypeAdapter(SimpleDateAdapter.class)
 	@XmlElement(name = "highschool_graduation_date")
@@ -665,11 +665,11 @@ public class Application implements  Serializable, IAclObject{
 		this.highschool_gpa = highschool_gpa;
 	}
 
-	public Float getHighschool_scale() {
+	public String getHighschool_scale() {
 		return highschool_scale;
 	}
 
-	public void setHighschool_scale(Float highschool_scale) {
+	public void setHighschool_scale(String highschool_scale) {
 		this.highschool_scale = highschool_scale;
 	}
 
