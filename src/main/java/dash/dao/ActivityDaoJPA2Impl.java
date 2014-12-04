@@ -8,8 +8,11 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import org.springframework.stereotype.Component;
+
 import dash.pojo.Activity;
 
+@Component("activityDao")
 public class ActivityDaoJPA2Impl implements ActivityDao {
 
 	@PersistenceContext(unitName = "dashPersistence")

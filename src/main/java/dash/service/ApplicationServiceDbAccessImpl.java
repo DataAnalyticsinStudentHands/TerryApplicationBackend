@@ -25,6 +25,7 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ApplicationObjectSupport;
 import org.springframework.security.acls.model.MutableAclService;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import dash.dao.ApplicationDao;
@@ -36,6 +37,7 @@ import dash.pojo.Application;
 import dash.security.CustomPermission;
 import dash.security.GenericAclController;
 
+@Component("applicationService")
 public class ApplicationServiceDbAccessImpl extends ApplicationObjectSupport
 		implements ApplicationService {
 

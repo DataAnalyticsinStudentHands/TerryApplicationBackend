@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -40,7 +38,7 @@ import dash.service.ApplicationService;
  * 
  * @author plindner
  */
-@Component
+@Component("applicationResource")
 @Path("/applications")
 public class ApplicationResource {
 

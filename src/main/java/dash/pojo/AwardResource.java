@@ -28,7 +28,7 @@ import dash.service.AwardService;
  * 
  * @author plindner
  */
-@Component
+@Component("awardResource")
 @Path("/award")
 public class AwardResource {
 

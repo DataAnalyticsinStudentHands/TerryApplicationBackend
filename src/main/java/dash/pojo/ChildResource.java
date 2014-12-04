@@ -28,7 +28,7 @@ import dash.service.ChildService;
  * 
  * @author plindner
  */
-@Component
+@Component("childResource")
 @Path("/child")
 public class ChildResource {
 

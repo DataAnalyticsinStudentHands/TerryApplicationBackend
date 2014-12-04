@@ -28,7 +28,7 @@ import dash.service.VolunteerService;
  * 
  * @author plindner
  */
-@Component
+@Component("volunteerResource")
 @Path("/volunteer")
 public class VolunteerResource {
 

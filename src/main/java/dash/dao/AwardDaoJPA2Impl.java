@@ -8,8 +8,11 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import org.springframework.stereotype.Component;
+
 import dash.pojo.Award;
 
+@Component("awardDao")
 public class AwardDaoJPA2Impl implements AwardDao {
 
 	@PersistenceContext(unitName = "dashPersistence")

@@ -8,8 +8,11 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import org.springframework.stereotype.Component;
+
 import dash.pojo.Child;
 
+@Component("childDao")
 public class ChildDaoJPA2Impl implements ChildDao {
 
 	@PersistenceContext(unitName = "dashPersistence")

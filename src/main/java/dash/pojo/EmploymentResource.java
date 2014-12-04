@@ -28,7 +28,7 @@ import dash.service.EmploymentService;
  * 
  * @author plindner
  */
-@Component
+@Component("employmentResource")
 @Path("/employment")
 public class EmploymentResource {
 

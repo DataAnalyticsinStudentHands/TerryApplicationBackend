@@ -10,8 +10,11 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import org.springframework.stereotype.Component;
+
 import dash.pojo.Application;
 
+@Component("applicationDao")
 public class ApplicationDaoJPA2Impl implements ApplicationDao {
 
 	@PersistenceContext(unitName = "dashPersistence")

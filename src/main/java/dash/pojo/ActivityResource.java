@@ -28,7 +28,7 @@ import dash.service.ActivityService;
  * 
  * @author plindner
  */
-@Component
+@Component("activityResource")
 @Path("/activity")
 public class ActivityResource {
 

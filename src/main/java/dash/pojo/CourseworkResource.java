@@ -28,7 +28,7 @@ import dash.service.CourseworkService;
  * 
  * @author plindner
  */
-@Component
+@Component("courseworkResource")
 @Path("/coursework")
 public class CourseworkResource {
 

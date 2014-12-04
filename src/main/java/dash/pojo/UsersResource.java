@@ -34,7 +34,7 @@ import dash.service.UserService;
  * @author plindner, tyler.swensen@gmail.com
  *
  */
-@Component
+@Component("userResource")
 @Path("/users")
 public class UsersResource {
 

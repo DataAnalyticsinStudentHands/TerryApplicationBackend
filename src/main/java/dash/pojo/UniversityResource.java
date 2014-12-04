@@ -28,7 +28,7 @@ import dash.service.UniversityService;
  * 
  * @author plindner
  */
-@Component
+@Component("universityResource")
 @Path("/university")
 public class UniversityResource {
 

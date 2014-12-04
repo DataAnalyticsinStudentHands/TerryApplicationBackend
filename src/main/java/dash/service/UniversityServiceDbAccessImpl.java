@@ -10,6 +10,7 @@ import org.apache.commons.beanutils.BeanUtilsBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ApplicationObjectSupport;
 import org.springframework.security.acls.model.MutableAclService;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import dash.dao.UniversityDao;
@@ -21,6 +22,7 @@ import dash.pojo.University;
 import dash.security.CustomPermission;
 import dash.security.GenericAclController;
 
+@Component("universityService")
 public class UniversityServiceDbAccessImpl extends ApplicationObjectSupport implements
 UniversityService {
 

@@ -18,6 +18,7 @@ import org.springframework.security.acls.model.MutableAclService;
 import org.springframework.security.acls.model.NotFoundException;
 import org.springframework.security.acls.model.ObjectIdentity;
 import org.springframework.security.acls.model.Sid;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import dash.dao.UserDao;
@@ -28,6 +29,7 @@ import dash.helpers.NullAwareBeanUtilsBean;
 import dash.pojo.User;
 import dash.security.UserLoginController;
 
+@Component("userService")
 public class UserServiceDbAccessImpl extends ApplicationObjectSupport implements
 UserService {
 
