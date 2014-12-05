@@ -45,8 +45,7 @@ public interface UserService {
 			Integer numberDaysToLookBack) throws AppException;
 	
 	@PostFilter("hasPermission(filterObject, 'READ')")
-	public List<User> getMyUser(String orderByInsertionDate,
-			Integer numberDaysToLookBack) throws AppException;
+	public List<User> getMyUser() throws AppException;
 
 	/**
 	 * Returns a user given its id

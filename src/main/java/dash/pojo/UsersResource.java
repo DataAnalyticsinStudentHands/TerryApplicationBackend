@@ -145,13 +145,14 @@ public class UsersResource {
 	@GET
 	@Path("myUser")
 	@Produces({ MediaType.APPLICATION_JSON })
-	public List<User> getMyUser(
-			@QueryParam("orderByInsertionDate") String orderByInsertionDate,
-			@QueryParam("numberDaysToLookBack") Integer numberDaysToLookBack)
+	public User getMyUser()
 			throws IOException, AppException {
-		List<User> users = userService.getMyUser(orderByInsertionDate,
-				numberDaysToLookBack);
-		return users;
+		List<User> users = userService.getMyUser();
+		if (!users.isEmpty()) {
+			return users.get(0);
+		}
+		else
+			return null;
 	}
 
 	@GET
@@ -172,8 +173,7 @@ public class UsersResource {
 	public Response getMyRole() throws IOException, AppException {
 
 		try {
-			List<String> role = userService.getRole(userService.getMyUser(
-					"ASC", null).get(0));
+			List<String> role = userService.getRole(userService.getMyUser().get(0));
 			return Response.status(Response.Status.OK).entity(role).build();
 		} catch (Exception e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
@@ -250,10 +250,10 @@ public class UsersResource {
 			return Response.status(Response.Status.BAD_REQUEST)
 					.entity("Cannot modify root user permissions").build();
 		case "ROLE_ADMIN":
-			if (userService.getRole(userService.getMyUser("ASC", null).get(0))
+			if (userService.getRole(userService.getMyUser().get(0))
 					.contains("ROLE_ADMIN")
 					|| userService.getRole(
-							userService.getMyUser("ASC", null).get(0))
+							userService.getMyUser().get(0))
 							.contains("ROLE_ROOT")) {
 				break;
 			} else

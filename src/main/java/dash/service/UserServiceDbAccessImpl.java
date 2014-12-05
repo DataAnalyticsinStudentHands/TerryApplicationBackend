@@ -142,10 +142,8 @@ UserService {
 	}
 	
 	@Override
-	public List<User> getMyUser(String orderByInsertionDate,
-			Integer numberDaysToLookBack) throws AppException {
-		return getUsers(orderByInsertionDate, numberDaysToLookBack);
-		
+	public List<User> getMyUser() throws AppException {
+		return getUsers(null, null);
 	}
 
 	private boolean isOrderByInsertionDateParameterValid(

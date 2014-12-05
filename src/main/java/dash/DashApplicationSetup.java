@@ -17,6 +17,7 @@ import dash.pojo.ChildResource;
 import dash.pojo.CourseworkResource;
 import dash.pojo.EmploymentResource;
 import dash.pojo.ScholarshipResource;
+import dash.pojo.TransferApplicationResource;
 import dash.pojo.UniversityResource;
 import dash.pojo.UsersResource;
 import dash.pojo.VolunteerResource;
@@ -41,6 +42,7 @@ public class DashApplicationSetup extends ResourceConfig {
 		register(CourseworkResource.class);
 		register(EmploymentResource.class);
 		register(ScholarshipResource.class);
+		register(TransferApplicationResource.class);
 		register(UniversityResource.class);
 		register(UsersResource.class);
 		register(VolunteerResource.class);
