@@ -39,7 +39,7 @@ public class ApplicationEntity implements Serializable {
 	private Date creation_timestamp;
 
 	@Column(name = "uh_id")
-	private Long uh_id;
+	private String uh_id;
 
 	@Column(name = "first_name")
 	private String first_name;
@@ -422,11 +422,11 @@ public class ApplicationEntity implements Serializable {
 		this.creation_timestamp = creation_timestamp;
 	}
 
-	public Long getUh_id() {
+	public String getUh_id() {
 		return uh_id;
 	}
 
-	public void setUh_id(Long uh_id) {
+	public void setUh_id(String uh_id) {
 		this.uh_id = uh_id;
 	}
 

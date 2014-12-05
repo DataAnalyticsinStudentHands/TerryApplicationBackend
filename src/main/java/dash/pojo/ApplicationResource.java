@@ -85,8 +85,7 @@ public class ApplicationResource {
 	@GET
 	@Path("{id}")
 	@Produces({ MediaType.APPLICATION_JSON, })
-	public Response getApplicationById(@PathParam("id") Long id,
-			@QueryParam("detailed") boolean detailed) throws IOException,
+	public Response getApplicationById(@PathParam("id") Long id) throws IOException,
 			AppException {
 		Application applicaionById = applicationService.getApplicationById(id);
 		return Response.status(200)
