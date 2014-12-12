@@ -39,7 +39,7 @@ import dash.service.ApplicationService;
  * @author plindner
  */
 @Component("applicationResource")
-@Path("/applications")
+@Path("/application")
 public class ApplicationResource {
 
 	@Autowired

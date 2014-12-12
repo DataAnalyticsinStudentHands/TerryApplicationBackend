@@ -39,7 +39,7 @@ import dash.service.TransferApplicationService;
  * @author plindner
  */
 @Component("transferApplicationResource")
-@Path("/transferApplications")
+@Path("/transferApplication")
 public class TransferApplicationResource {
 
 	@Autowired
