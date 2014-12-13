@@ -32,6 +32,9 @@ public class EmploymentEntity implements Serializable {
 	@Column(name = "application_id")
 	private Long application_id;
 	
+	@Column(name = "transfer")
+	private String transfer;
+	
 	@Column(name = "position")
 	private String position;
 
@@ -48,10 +51,6 @@ public class EmploymentEntity implements Serializable {
 	private Date date_to;
 	
 	public EmploymentEntity(){}
-
-	public EmploymentEntity(String position) {
-		this.position = position;
-	}
 
 	public EmploymentEntity(Employment employment) {
 		try {
@@ -79,6 +78,14 @@ public class EmploymentEntity implements Serializable {
 
 	public void setApplication_id(Long application_id) {
 		this.application_id = application_id;
+	}
+
+	public String getTransfer() {
+		return transfer;
+	}
+
+	public void setTransfer(String transfer) {
+		this.transfer = transfer;
 	}
 
 	public String getPosition() {

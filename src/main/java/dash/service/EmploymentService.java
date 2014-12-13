@@ -42,7 +42,7 @@ public interface EmploymentService {
 	public Employment getEmploymentById(Long id) throws AppException;
 	
 	@PostFilter("hasRole('ROLE_ADMIN')")
-	public List<Employment> getEmploymentByAppId(Long appId) throws AppException;
+	public List<Employment> getEmploymentByAppId(Long appId, boolean transfer) throws AppException;
 	
 	/*
 	 * ******************** Update related methods **********************
@@ -58,13 +58,9 @@ public interface EmploymentService {
 	 */
 	@PreAuthorize("hasPermission(#employment, 'delete') or hasRole('ROLE_ADMIN')")
 	public void deleteEmployment(Employment employment);
-	
-	/** removes all applications
-	 * DO NOT USE, IMPROPERLY UPDATES ACL_OBJECT table
-	 * Functional but does not destroy old acl's which doesnt hurt anything
-	 * but they will take up space if this is commonly used */
-	@PreAuthorize("hasRole('ROLE_ROOT')")
-	public void deleteEmployments();	
+
+	@PreAuthorize("hasPermission(#employment, 'delete') or hasRole('ROLE_ADMIN')")
+	public void deleteEmploymentsByApplicationId(Long aapId);	
 
 	/*
 	 * ******************** Helper methods **********************

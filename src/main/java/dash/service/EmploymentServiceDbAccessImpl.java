@@ -100,9 +100,9 @@ EmploymentService {
 	}
 	
 	@Override
-	public List<Employment> getEmploymentByAppId(Long appId) throws AppException {
+	public List<Employment> getEmploymentByAppId(Long appId, boolean transfer) throws AppException {
 		
-		List<EmploymentEntity> employments = employmentDao.getEmploymentByAppId(appId);
+		List<EmploymentEntity> employments = employmentDao.getEmploymentByAppId(appId, transfer);
 		
 		return getEmploymentFromEntities(employments);
 	}
@@ -167,10 +167,8 @@ EmploymentService {
 
 	@Override
 	@Transactional
-	// TODO: This shouldn't exist? If it must, then it needs to accept a list of
-	// Employments to delete
-	public void deleteEmployments() {
-		employmentDao.deleteEmployments();
+	public void deleteEmploymentsByApplicationId(Long appId) {
+		employmentDao.deleteEmploymentsByApplicationId(appId);
 	}
 
 	@Override

@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlElement;
 
 import org.apache.commons.beanutils.BeanUtils;
 
@@ -31,6 +30,9 @@ public class InstitutionEntity implements Serializable {
 	
 	@Column(name = "application_id")
 	private Long application_id;
+	
+	@Column(name = "transfer")
+	private String transfer;
 	
 	@Column(name = "name")
 	private String name;
@@ -87,6 +89,14 @@ public class InstitutionEntity implements Serializable {
 
 	public void setApplication_id(Long application_id) {
 		this.application_id = application_id;
+	}
+
+	public String getTransfer() {
+		return transfer;
+	}
+
+	public void setTransfer(String transfer) {
+		this.transfer = transfer;
 	}
 
 	public String getName() {

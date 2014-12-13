@@ -5,7 +5,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Component;
@@ -49,10 +48,12 @@ public class EmploymentDaoJPA2Impl implements EmploymentDao {
 	}
 	
 	@Override
-	public List<EmploymentEntity> getEmploymentByAppId(Long appId) {
+	public List<EmploymentEntity> getEmploymentByAppId(Long appId, boolean transfer) {
 		
 		try {
-			String qlString = "SELECT u FROM EmploymentEntity u WHERE u.application_id = ?1";
+			
+			String qlString = "SELECT u FROM EmploymentEntity u WHERE u.application_id = ?1 and u.transfer = ?2";
+			
 			TypedQuery<EmploymentEntity> query = entityManager.createQuery(
 					qlString, EmploymentEntity.class);
 			query.setParameter(1, appId);
@@ -89,10 +90,11 @@ public class EmploymentDaoJPA2Impl implements EmploymentDao {
 	}
 
 	@Override
-	public void deleteEmployments() {
-		Query query = entityManager
-				.createNativeQuery("TRUNCATE TABLE employment");
-		query.executeUpdate();
+	public void deleteEmploymentsByApplicationId(Long appId) {
+		List<EmploymentEntity> listToDelete = getEmploymentByAppId(appId, true);
+		for (int i = 0; i < listToDelete.size(); i++) {
+			entityManager.remove(listToDelete.get(i));
+		}
 	}
 
 }

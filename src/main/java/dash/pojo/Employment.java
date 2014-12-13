@@ -26,6 +26,9 @@ public class Employment implements  Serializable, IAclObject{
 	@XmlElement(name = "application_id")
 	private Long application_id;
 	
+	@XmlElement(name = "transfer")
+	private String transfer;
+	
 	@XmlElement(name = "position")
 	private String position;
 
@@ -44,12 +47,6 @@ public class Employment implements  Serializable, IAclObject{
 	private Date date_to;
 	
 	public Employment(){}
-	
-	public Employment(Long id, String position) {
-		super();
-		this.id = id;
-		this.position = position;
-	}
 	
 	public Employment(EmploymentEntity employmentEntity) {
 		try {
@@ -77,6 +74,14 @@ public class Employment implements  Serializable, IAclObject{
 
 	public void setApplication_id(Long application_id) {
 		this.application_id = application_id;
+	}
+
+	public String getTransfer() {
+		return transfer;
+	}
+
+	public void setTransfer(String transfer) {
+		this.transfer = transfer;
 	}
 
 	public String getPosition() {

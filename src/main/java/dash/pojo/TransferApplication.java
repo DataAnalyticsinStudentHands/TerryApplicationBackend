@@ -137,6 +137,9 @@ public class TransferApplication implements  Serializable, IAclObject{
 	@XmlElement(name = "highschool_ptk_member")
 	private String highschool_ptk_member;
 	
+	@XmlElement(name = "currently_employed")
+	private String currently_employed;
+	
 	@XmlElement(name = "first_graduate")
 	private String first_graduate;
 	
@@ -655,6 +658,14 @@ public class TransferApplication implements  Serializable, IAclObject{
 
 	public void setHighschool_ptk_member(String highschool_ptk_member) {
 		this.highschool_ptk_member = highschool_ptk_member;
+	}
+
+	public String getCurrently_employed() {
+		return currently_employed;
+	}
+
+	public void setCurrently_employed(String currently_employed) {
+		this.currently_employed = currently_employed;
 	}
 
 	public String getFirst_graduate() {

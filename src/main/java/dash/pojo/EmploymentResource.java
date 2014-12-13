@@ -78,13 +78,14 @@ public class EmploymentResource {
 	@GET
 	@Path("list/{id}")
 	@Produces({ MediaType.APPLICATION_JSON })
-	public List<Employment> getEmploymentByApplicationId(@PathParam("id") Long appId) throws IOException,
+	public List<Employment> getEmploymentByApplicationId(@PathParam("id") Long appId,
+			@QueryParam("transfer") boolean transfer) throws IOException,
 			AppException {
+			
 		List<Employment> employments = employmentService
-				.getEmploymentByAppId(appId);
+				.getEmploymentByAppId(appId, transfer);
 		return employments;
 	}
-
 
 	@PUT
 	@Path("{id}")
@@ -155,16 +156,4 @@ public class EmploymentResource {
 				.entity("employment successfully removed from database")
 				.build();
 	}
-
-	@DELETE
-	@Path("admin")
-	@Produces({ MediaType.TEXT_HTML })
-	public Response deleteEmployments() {
-		employmentService.deleteEmployments();
-		return Response.status(Response.Status.NO_CONTENT)
-				// 204
-				.entity("All employment have been successfully removed")
-				.build();
-	}
-
 }
