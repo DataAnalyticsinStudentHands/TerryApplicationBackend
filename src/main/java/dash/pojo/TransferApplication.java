@@ -106,93 +106,36 @@ public class TransferApplication implements  Serializable, IAclObject{
 	@XmlElement(name = "highschool_city")
 	private String highschool_city;
 	
-	@XmlElement(name = "highschool_councelor")
-	private String highschool_councelor;
+	@XmlElement(name = "highschool_diploma")
+	private String highschool_diploma;
 	
-	@XmlElement(name = "highschool_phone")
-	private String highschool_phone;
-	
-	@XmlElement(name = "highschool_councelor_email")
-	private String highschool_councelor_email;
-	
-	@XmlElement(name = "highschool_gpa")
-	private Float highschool_gpa;
-	
-	@XmlElement(name = "highschool_scale")
-	private String highschool_scale;
+	@XmlElement(name = "highschool_ged")
+	private String highschool_ged;
 	
 	@XmlJavaTypeAdapter(SimpleDateAdapter.class)
 	@XmlElement(name = "highschool_graduation_date")
 	private Date highschool_graduation_date;
+	
+	@XmlElement(name = "highschool_graduation_date_na")
+	private String highschool_graduation_date_na;
 	  
-	@XmlElement(name = "highschool_rank")
-	private Integer highschool_rank;
+	@XmlElement(name = "highschool_ged_date")
+	private Date highschool_ged_date;
 	
-	@XmlElement(name = "highschool_rank_out")
-	private Integer highschool_rank_out;
+	@XmlElement(name = "highschool_ged_date_na")
+	private String highschool_ged_date_na;
 	  
-	@XmlElement(name = "highschool_rank_tied")
-	private Integer highschool_rank_tied;
+	@XmlElement(name = "college_hours_progress")
+	private String college_hours_progress;
 	
-	@XmlElement(name = "psat_verbal")
-	private Float psat_verbal;
+	@XmlElement(name = "cum_gpa")
+	private Float cum_gpa;
 	
-	@XmlElement(name = "psat_math")
-	private Float psat_math;
+	@XmlElement(name = "cum_gpa_na")
+	private String cum_gpa_na;
 	
-	@XmlElement(name = "psat_writing")
-	private Float psat_writing;
-	
-	@XmlElement(name = "psat_selection")
-	private Float psat_selection;
-	
-	@XmlJavaTypeAdapter(SimpleDateAdapter.class)
-	@XmlElement(name = "psat_date")
-	private Date psat_date;
-	
-	@XmlElement(name = "sat_reading")
-	private Float sat_reading;
-	
-	@XmlElement(name = "sat_math")
-	private Float sat_math;
-	
-	@XmlElement(name = "sat_writing")
-	private Float sat_writing;
-	
-	@XmlElement(name = "sat_composite")
-	private Float sat_composite;
-	
-	@XmlJavaTypeAdapter(SimpleDateAdapter.class)
-	@XmlElement(name = "sat_date")
-	private Date sat_date;
-	
-	@XmlElement(name = "act_composite")
-	private Float act_composite;
-		
-	@XmlJavaTypeAdapter(SimpleDateAdapter.class)
-	@XmlElement(name = "act_date")
-	private Date act_date;
-	
-	@XmlElement(name = "national_merit")
-	private String national_merit;
-	
-	@XmlJavaTypeAdapter(SimpleDateAdapter.class)
-	@XmlElement(name = "national_merit_date")
-	private Date national_merit_date;
-	
-	@XmlElement(name = "national_achievement")
-	private String national_achievement;
-	
-	@XmlJavaTypeAdapter(SimpleDateAdapter.class)
-	@XmlElement(name = "national_achievement_date")
-	private Date national_achievement_date;
-	
-	@XmlElement(name = "national_hispanic")
-	private String national_hispanic;
-	
-	@XmlJavaTypeAdapter(SimpleDateAdapter.class)
-	@XmlElement(name = "national_hispanic_date")
-	private Date national_hispanic_date;
+	@XmlElement(name = "highschool_ptk_member")
+	private String highschool_ptk_member;
 	
 	@XmlElement(name = "first_graduate")
 	private String first_graduate;
@@ -633,44 +576,20 @@ public class TransferApplication implements  Serializable, IAclObject{
 		this.highschool_city = highschool_city;
 	}
 
-	public String getHighschool_councelor() {
-		return highschool_councelor;
+	public String getHighschool_diploma() {
+		return highschool_diploma;
 	}
 
-	public void setHighschool_councelor(String highschool_councelor) {
-		this.highschool_councelor = highschool_councelor;
+	public void setHighschool_diploma(String highschool_diploma) {
+		this.highschool_diploma = highschool_diploma;
 	}
 
-	public String getHighschool_phone() {
-		return highschool_phone;
+	public String getHighschool_ged() {
+		return highschool_ged;
 	}
 
-	public void setHighschool_phone(String highschool_phone) {
-		this.highschool_phone = highschool_phone;
-	}
-
-	public String getHighschool_councelor_email() {
-		return highschool_councelor_email;
-	}
-
-	public void setHighschool_councelor_email(String highschool_councelor_email) {
-		this.highschool_councelor_email = highschool_councelor_email;
-	}
-
-	public Float getHighschool_gpa() {
-		return highschool_gpa;
-	}
-
-	public void setHighschool_gpa(Float highschool_gpa) {
-		this.highschool_gpa = highschool_gpa;
-	}
-
-	public String getHighschool_scale() {
-		return highschool_scale;
-	}
-
-	public void setHighschool_scale(String highschool_scale) {
-		this.highschool_scale = highschool_scale;
+	public void setHighschool_ged(String highschool_ged) {
+		this.highschool_ged = highschool_ged;
 	}
 
 	public Date getHighschool_graduation_date() {
@@ -681,172 +600,61 @@ public class TransferApplication implements  Serializable, IAclObject{
 		this.highschool_graduation_date = highschool_graduation_date;
 	}
 
-	public Integer getHighschool_rank() {
-		return highschool_rank;
+	public String getHighschool_graduation_date_na() {
+		return highschool_graduation_date_na;
 	}
 
-	public void setHighschool_rank(Integer highschool_rank) {
-		this.highschool_rank = highschool_rank;
+	public void setHighschool_graduation_date_na(
+			String highschool_graduation_date_na) {
+		this.highschool_graduation_date_na = highschool_graduation_date_na;
 	}
 
-	public Integer getHighschool_rank_out() {
-		return highschool_rank_out;
+	public Date getHighschool_ged_date() {
+		return highschool_ged_date;
 	}
 
-	public void setHighschool_rank_out(Integer highschool_rank_out) {
-		this.highschool_rank_out = highschool_rank_out;
+	public void setHighschool_ged_date(Date highschool_ged_date) {
+		this.highschool_ged_date = highschool_ged_date;
 	}
 
-	public Integer getHighschool_rank_tied() {
-		return highschool_rank_tied;
+	public String getHighschool_ged_date_na() {
+		return highschool_ged_date_na;
 	}
 
-	public void setHighschool_rank_tied(Integer highschool_rank_tied) {
-		this.highschool_rank_tied = highschool_rank_tied;
+	public void setHighschool_ged_date_na(String highschool_ged_date_na) {
+		this.highschool_ged_date_na = highschool_ged_date_na;
 	}
 
-	public Float getPsat_verbal() {
-		return psat_verbal;
+	public String getCollege_hours_progress() {
+		return college_hours_progress;
 	}
 
-	public void setPsat_verbal(Float psat_verbal) {
-		this.psat_verbal = psat_verbal;
+	public void setCollege_hours_progress(String college_hours_progress) {
+		this.college_hours_progress = college_hours_progress;
 	}
 
-	public Float getPsat_math() {
-		return psat_math;
+	public Float getCum_gpa() {
+		return cum_gpa;
 	}
 
-	public void setPsat_math(Float psat_math) {
-		this.psat_math = psat_math;
+	public void setCum_gpa(Float cum_gpa) {
+		this.cum_gpa = cum_gpa;
 	}
 
-	public Float getPsat_writing() {
-		return psat_writing;
+	public String getCum_gpa_na() {
+		return cum_gpa_na;
 	}
 
-	public void setPsat_writing(Float psat_writing) {
-		this.psat_writing = psat_writing;
+	public void setCum_gpa_na(String cum_gpa_na) {
+		this.cum_gpa_na = cum_gpa_na;
 	}
 
-	public Float getPsat_selection() {
-		return psat_selection;
+	public String getHighschool_ptk_member() {
+		return highschool_ptk_member;
 	}
 
-	public void setPsat_selection(Float psat_selection) {
-		this.psat_selection = psat_selection;
-	}
-
-	public Date getPsat_date() {
-		return psat_date;
-	}
-
-	public void setPsat_date(Date psat_date) {
-		this.psat_date = psat_date;
-	}
-
-	public Float getSat_reading() {
-		return sat_reading;
-	}
-
-	public void setSat_reading(Float sat_reading) {
-		this.sat_reading = sat_reading;
-	}
-
-	public Float getSat_math() {
-		return sat_math;
-	}
-
-	public void setSat_math(Float sat_math) {
-		this.sat_math = sat_math;
-	}
-
-	public Float getSat_writing() {
-		return sat_writing;
-	}
-
-	public void setSat_writing(Float sat_writing) {
-		this.sat_writing = sat_writing;
-	}
-
-	public Float getSat_composite() {
-		return sat_composite;
-	}
-
-	public void setSat_composite(Float sat_composite) {
-		this.sat_composite = sat_composite;
-	}
-
-	public Date getSat_date() {
-		return sat_date;
-	}
-
-	public void setSat_date(Date sat_date) {
-		this.sat_date = sat_date;
-	}
-
-	public Float getAct_composite() {
-		return act_composite;
-	}
-
-	public void setAct_composite(Float act_composite) {
-		this.act_composite = act_composite;
-	}
-
-	public Date getAct_date() {
-		return act_date;
-	}
-
-	public void setAct_date(Date act_date) {
-		this.act_date = act_date;
-	}
-
-	public String getNational_merit() {
-		return national_merit;
-	}
-
-	public void setNational_merit(String national_merit) {
-		this.national_merit = national_merit;
-	}
-
-	public Date getNational_merit_date() {
-		return national_merit_date;
-	}
-
-	public void setNational_merit_date(Date national_merit_date) {
-		this.national_merit_date = national_merit_date;
-	}
-
-	public String getNational_achievement() {
-		return national_achievement;
-	}
-
-	public void setNational_achievement(String national_achievement) {
-		this.national_achievement = national_achievement;
-	}
-
-	public Date getNational_achievement_date() {
-		return national_achievement_date;
-	}
-
-	public void setNational_achievement_date(Date national_achievement_date) {
-		this.national_achievement_date = national_achievement_date;
-	}
-
-	public String getNational_hispanic() {
-		return national_hispanic;
-	}
-
-	public void setNational_hispanic(String national_hispanic) {
-		this.national_hispanic = national_hispanic;
-	}
-
-	public Date getNational_hispanic_date() {
-		return national_hispanic_date;
-	}
-
-	public void setNational_hispanic_date(Date national_hispanic_date) {
-		this.national_hispanic_date = national_hispanic_date;
+	public void setHighschool_ptk_member(String highschool_ptk_member) {
+		this.highschool_ptk_member = highschool_ptk_member;
 	}
 
 	public String getFirst_graduate() {
