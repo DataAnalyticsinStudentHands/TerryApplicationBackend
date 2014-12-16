@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.apache.commons.beanutils.BeanUtils;
 
-import dash.dao.VolunteerEntity;
+import dash.dao.TransferActivityEntity;
 import dash.helpers.SimpleDateAdapter;
 import dash.security.IAclObject;
 
@@ -18,7 +18,7 @@ import java.util.Date;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Volunteer implements  Serializable, IAclObject{
+public class TransferActivity implements  Serializable, IAclObject{
 
 	@XmlElement(name = "id")
 	private Long id;
@@ -29,11 +29,11 @@ public class Volunteer implements  Serializable, IAclObject{
 	@XmlElement(name = "transfer")
 	private String transfer;
 	
-	@XmlElement(name = "place")
-	private String place;
+	@XmlElement(name = "activity")
+	private String activity;
 
-	@XmlElement(name = "description")
-	private String description;
+	@XmlElement(name = "position")
+	private String position;
 
 	@XmlElement(name = "hours_week")
 	private Long hours_week;
@@ -55,11 +55,17 @@ public class Volunteer implements  Serializable, IAclObject{
 	@XmlElement(name = "date_to_na")
 	private String date_to_na;
 	
-	public Volunteer(){}
+	public TransferActivity(){}
 	
-	public Volunteer(VolunteerEntity volunteerEntity) {
+	public TransferActivity(Long id, String place) {
+		super();
+		this.id = id;
+		this.activity = place;
+	}
+	
+	public TransferActivity(TransferActivityEntity transferActivityEntity) {
 		try {
-			BeanUtils.copyProperties(this, volunteerEntity);			
+			BeanUtils.copyProperties(this, transferActivityEntity);			
 		} catch ( IllegalAccessException e) {
 
 			e.printStackTrace();
@@ -93,20 +99,20 @@ public class Volunteer implements  Serializable, IAclObject{
 		this.transfer = transfer;
 	}
 
-	public String getPlace() {
-		return place;
+	public String getActivity() {
+		return activity;
 	}
 
-	public void setPlace(String place) {
-		this.place = place;
+	public void setActivity(String activity) {
+		this.activity = activity;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getPosition() {
+		return position;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setPosition(String position) {
+		this.position = position;
 	}
 
 	public Long getHours_week() {

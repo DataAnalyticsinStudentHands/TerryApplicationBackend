@@ -23,6 +23,9 @@ public class Award implements  Serializable, IAclObject{
 	@XmlElement(name = "application_id")
 	private Long application_id;
 	
+	@XmlElement(name = "transfer")
+	private String transfer;
+	
 	@XmlElement(name = "award")
 	private String award;
 
@@ -69,6 +72,14 @@ public class Award implements  Serializable, IAclObject{
 
 	public void setApplication_id(Long application_id) {
 		this.application_id = application_id;
+	}
+
+	public String getTransfer() {
+		return transfer;
+	}
+
+	public void setTransfer(String transfer) {
+		this.transfer = transfer;
 	}
 
 	public String getAward() {

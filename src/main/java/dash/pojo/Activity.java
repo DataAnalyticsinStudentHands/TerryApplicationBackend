@@ -22,6 +22,9 @@ public class Activity implements  Serializable, IAclObject{
 	
 	@XmlElement(name = "activity")
 	private String activity;
+	
+	@XmlElement(name = "transfer")
+	private String transfer;
 
 	@XmlElement(name = "position")
 	private String position;
@@ -69,6 +72,14 @@ public class Activity implements  Serializable, IAclObject{
 
 	public void setActivity(String activity) {
 		this.activity = activity;
+	}
+
+	public String getTransfer() {
+		return transfer;
+	}
+
+	public void setTransfer(String transfer) {
+		this.transfer = transfer;
 	}
 
 	public String getPosition() {

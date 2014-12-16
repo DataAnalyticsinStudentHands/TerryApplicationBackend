@@ -32,6 +32,9 @@ public class VolunteerEntity implements Serializable {
 	@Column(name = "application_id")
 	private Long application_id;
 	
+	@Column(name = "transfer")
+	private String transfer;
+	
 	@Column(name = "place")
 	private String place;
 
@@ -47,14 +50,16 @@ public class VolunteerEntity implements Serializable {
 	@Column(name = "date_from")
 	private Date date_from;
 	
+	@Column(name = "date_from_na")
+	private String date_from_na;
+	
 	@Column(name = "date_to")
 	private Date date_to;
 	
+	@Column(name = "date_to_na")
+	private String date_to_na;
+	
 	public VolunteerEntity(){}
-
-	public VolunteerEntity(String place) {
-		this.place = place;
-	}
 
 	public VolunteerEntity(Volunteer volunteer) {
 		try {
@@ -82,6 +87,14 @@ public class VolunteerEntity implements Serializable {
 
 	public void setApplication_id(Long application_id) {
 		this.application_id = application_id;
+	}
+
+	public String getTransfer() {
+		return transfer;
+	}
+
+	public void setTransfer(String transfer) {
+		this.transfer = transfer;
 	}
 
 	public String getPlace() {
@@ -124,11 +137,27 @@ public class VolunteerEntity implements Serializable {
 		this.date_from = date_from;
 	}
 
+	public String getDate_from_na() {
+		return date_from_na;
+	}
+
+	public void setDate_from_na(String date_from_na) {
+		this.date_from_na = date_from_na;
+	}
+
 	public Date getDate_to() {
 		return date_to;
 	}
 
 	public void setDate_to(Date date_to) {
 		this.date_to = date_to;
+	}
+
+	public String getDate_to_na() {
+		return date_to_na;
+	}
+
+	public void setDate_to_na(String date_to_na) {
+		this.date_to_na = date_to_na;
 	}
 }

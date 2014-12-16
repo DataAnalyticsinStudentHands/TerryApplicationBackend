@@ -1,79 +1,83 @@
-package dash.pojo;
-
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
-import org.apache.commons.beanutils.BeanUtils;
-
-import dash.dao.VolunteerEntity;
-import dash.helpers.SimpleDateAdapter;
-import dash.security.IAclObject;
+package dash.dao;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
-public class Volunteer implements  Serializable, IAclObject{
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-	@XmlElement(name = "id")
+import org.apache.commons.beanutils.BeanUtils;
+
+import dash.pojo.TransferActivity;
+
+/**
+ * TransferActivity entity
+ * @author plindner
+ *
+ */
+@Entity
+@Table(name="transfer_activity")
+public class TransferActivityEntity implements Serializable {
+
+	/** id of the object */
+	@Id
+	@GeneratedValue
+	@Column(name="id")
 	private Long id;
 	
-	@XmlElement(name = "application_id")
+	@Column(name = "application_id")
 	private Long application_id;
 	
-	@XmlElement(name = "transfer")
+	@Column(name = "transfer")
 	private String transfer;
 	
-	@XmlElement(name = "place")
-	private String place;
-
-	@XmlElement(name = "description")
-	private String description;
-
-	@XmlElement(name = "hours_week")
+	@Column(name = "activity")
+	private String activity;
+	
+	@Column(name = "position")
+	private String position;
+	
+	@Column(name = "hours_week")
 	private Long hours_week;
 	
-	@XmlElement(name = "hours_total")
+	@Column(name = "hours_total")
 	private Long hours_total;
 	
-	@XmlElement(name = "date_from")
-	@XmlJavaTypeAdapter(SimpleDateAdapter.class)
+	@Column(name = "date_from")
 	private Date date_from;
 	
-	@XmlElement(name = "date_from_na")
+	@Column(name = "date_from_na")
 	private String date_from_na;
 	
-	@XmlElement(name = "date_to")
-	@XmlJavaTypeAdapter(SimpleDateAdapter.class)
+	@Column(name = "date_to")
 	private Date date_to;
 	
-	@XmlElement(name = "date_to_na")
+	@Column(name = "date_to_na")
 	private String date_to_na;
 	
-	public Volunteer(){}
-	
-	public Volunteer(VolunteerEntity volunteerEntity) {
-		try {
-			BeanUtils.copyProperties(this, volunteerEntity);			
-		} catch ( IllegalAccessException e) {
+	public TransferActivityEntity(){}
 
+	public TransferActivityEntity(TransferActivity transferActivity) {
+		try {
+			BeanUtils.copyProperties(this, transferActivity);
+		} catch ( IllegalAccessException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch ( InvocationTargetException e) {
-
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId( Long id) {
 		this.id = id;
 	}
 
@@ -93,20 +97,20 @@ public class Volunteer implements  Serializable, IAclObject{
 		this.transfer = transfer;
 	}
 
-	public String getPlace() {
-		return place;
+	public String getActivity() {
+		return activity;
 	}
 
-	public void setPlace(String place) {
-		this.place = place;
+	public void setActivity(String activity) {
+		this.activity = activity;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getPosition() {
+		return position;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setPosition(String position) {
+		this.position = position;
 	}
 
 	public Long getHours_week() {

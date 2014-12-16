@@ -130,6 +130,9 @@ public class ApplicationEntity implements Serializable {
 
 	@Column(name = "highschool_graduation_date")
 	private Date highschool_graduation_date;
+	
+	@Column(name = "highschool_graduation_date_na")
+	private String highschool_graduation_date_na;
 
 	@Column(name = "highschool_rank")
 	private Integer highschool_rank;
@@ -346,36 +349,60 @@ public class ApplicationEntity implements Serializable {
 
 	@Column(name = "app_uh_date_sub")
 	private Date app_uh_date_sub;
+	
+	@Column(name = "app_uh_date_sub_na")
+	private String app_uh_date_sub_na;
 
 	@Column(name = "app_uh_date_int_sub")
 	private Date app_uh_date_int_sub;
+	
+	@Column(name = "app_uh_date_int_sub_na")
+	private String app_uh_date_int_sub_na;
 
 	@Column(name = "transcript_method")
 	private String transcript_method;
 
 	@Column(name = "transcript_date_sub")
 	private Date transcript_date_sub;
+	
+	@Column(name = "transcript_date_sub_na")
+	private String transcript_date_sub_na;
 
 	@Column(name = "transcript_date_int_sub")
 	private Date transcript_date_int_sub;
+	
+	@Column(name = "transcript_date_int_sub_na")
+	private String transcript_date_int_sub_na;
 
 	@Column(name = "fafsa_method")
 	private String fafsa_method;
 
 	@Column(name = "fafsa_date_sub")
 	private Date fafsa_date_sub;
+	
+	@Column(name = "fafsa_date_sub_na")
+	private String fafsa_date_sub_na;
 
 	@Column(name = "fafsa_date_int_sub")
 	private Date fafsa_date_int_sub;
+	
+	@Column(name = "fafsa_date_int_sub_na")
+	private String fafsa_date_int_sub_na;
 
 	@Column(name = "housing_method")
 	private String housing_method;
 
 	@Column(name = "housing_date_sub")
 	private Date housing_date_sub;
+	
+	@Column(name = "housing_date_sub_na")
+	private String housing_date_sub_na;
 
 	@Column(name = "housing_date_int_sub")
 	private Date housing_date_int_sub;
+	
+	@Column(name = "housing_date_int_sub_na")
+	private String housing_date_int_sub_na;
 
 	public ApplicationEntity() {
 	}
@@ -668,6 +695,15 @@ public class ApplicationEntity implements Serializable {
 
 	public void setHighschool_graduation_date(Date highschool_graduation_date) {
 		this.highschool_graduation_date = highschool_graduation_date;
+	}
+
+	public String getHighschool_graduation_date_na() {
+		return highschool_graduation_date_na;
+	}
+
+	public void setHighschool_graduation_date_na(
+			String highschool_graduation_date_na) {
+		this.highschool_graduation_date_na = highschool_graduation_date_na;
 	}
 
 	public Integer getHighschool_rank() {
@@ -1247,12 +1283,28 @@ public class ApplicationEntity implements Serializable {
 		this.app_uh_date_sub = app_uh_date_sub;
 	}
 
+	public String getApp_uh_date_sub_na() {
+		return app_uh_date_sub_na;
+	}
+
+	public void setApp_uh_date_sub_na(String app_uh_date_sub_na) {
+		this.app_uh_date_sub_na = app_uh_date_sub_na;
+	}
+
 	public Date getApp_uh_date_int_sub() {
 		return app_uh_date_int_sub;
 	}
 
 	public void setApp_uh_date_int_sub(Date app_uh_date_int_sub) {
 		this.app_uh_date_int_sub = app_uh_date_int_sub;
+	}
+
+	public String getApp_uh_date_int_sub_na() {
+		return app_uh_date_int_sub_na;
+	}
+
+	public void setApp_uh_date_int_sub_na(String app_uh_date_int_sub_na) {
+		this.app_uh_date_int_sub_na = app_uh_date_int_sub_na;
 	}
 
 	public String getTranscript_method() {
@@ -1271,12 +1323,28 @@ public class ApplicationEntity implements Serializable {
 		this.transcript_date_sub = transcript_date_sub;
 	}
 
+	public String getTranscript_date_sub_na() {
+		return transcript_date_sub_na;
+	}
+
+	public void setTranscript_date_sub_na(String transcript_date_sub_na) {
+		this.transcript_date_sub_na = transcript_date_sub_na;
+	}
+
 	public Date getTranscript_date_int_sub() {
 		return transcript_date_int_sub;
 	}
 
 	public void setTranscript_date_int_sub(Date transcript_date_int_sub) {
 		this.transcript_date_int_sub = transcript_date_int_sub;
+	}
+
+	public String getTranscript_date_int_sub_na() {
+		return transcript_date_int_sub_na;
+	}
+
+	public void setTranscript_date_int_sub_na(String transcript_date_int_sub_na) {
+		this.transcript_date_int_sub_na = transcript_date_int_sub_na;
 	}
 
 	public String getFafsa_method() {
@@ -1295,12 +1363,28 @@ public class ApplicationEntity implements Serializable {
 		this.fafsa_date_sub = fafsa_date_sub;
 	}
 
+	public String getFafsa_date_sub_na() {
+		return fafsa_date_sub_na;
+	}
+
+	public void setFafsa_date_sub_na(String fafsa_date_sub_na) {
+		this.fafsa_date_sub_na = fafsa_date_sub_na;
+	}
+
 	public Date getFafsa_date_int_sub() {
 		return fafsa_date_int_sub;
 	}
 
 	public void setFafsa_date_int_sub(Date fafsa_date_int_sub) {
 		this.fafsa_date_int_sub = fafsa_date_int_sub;
+	}
+
+	public String getFafsa_date_int_sub_na() {
+		return fafsa_date_int_sub_na;
+	}
+
+	public void setFafsa_date_int_sub_na(String fafsa_date_int_sub_na) {
+		this.fafsa_date_int_sub_na = fafsa_date_int_sub_na;
 	}
 
 	public String getHousing_method() {
@@ -1319,11 +1403,27 @@ public class ApplicationEntity implements Serializable {
 		this.housing_date_sub = housing_date_sub;
 	}
 
+	public String getHousing_date_sub_na() {
+		return housing_date_sub_na;
+	}
+
+	public void setHousing_date_sub_na(String housing_date_sub_na) {
+		this.housing_date_sub_na = housing_date_sub_na;
+	}
+
 	public Date getHousing_date_int_sub() {
 		return housing_date_int_sub;
 	}
 
 	public void setHousing_date_int_sub(Date housing_date_int_sub) {
 		this.housing_date_int_sub = housing_date_int_sub;
+	}
+
+	public String getHousing_date_int_sub_na() {
+		return housing_date_int_sub_na;
+	}
+
+	public void setHousing_date_int_sub_na(String housing_date_int_sub_na) {
+		this.housing_date_int_sub_na = housing_date_int_sub_na;
 	}
 }

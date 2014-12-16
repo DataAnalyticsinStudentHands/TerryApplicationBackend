@@ -23,6 +23,9 @@ public class Scholarship implements  Serializable, IAclObject{
 	@XmlElement(name = "application_id")
 	private Long application_id;
 	
+	@XmlElement(name = "transfer")
+	private Boolean transfer;
+	
 	@XmlElement(name = "applied_received")
 	private Boolean applied_received;
 
@@ -69,6 +72,14 @@ public class Scholarship implements  Serializable, IAclObject{
 
 	public void setApplication_id(Long application_id) {
 		this.application_id = application_id;
+	}
+
+	public Boolean getTransfer() {
+		return transfer;
+	}
+
+	public void setTransfer(Boolean transfer) {
+		this.transfer = transfer;
 	}
 
 	public Boolean getApplied_received() {

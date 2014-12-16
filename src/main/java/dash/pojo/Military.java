@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.beanutils.BeanUtils;
 
-import dash.dao.UniversityEntity;
+import dash.dao.MilitaryEntity;
 import dash.security.IAclObject;
 
 import java.io.Serializable;
@@ -15,7 +15,7 @@ import java.lang.reflect.InvocationTargetException;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class University implements  Serializable, IAclObject{
+public class Military implements  Serializable, IAclObject{
 
 	@XmlElement(name = "id")
 	private Long id;
@@ -26,23 +26,29 @@ public class University implements  Serializable, IAclObject{
 	@XmlElement(name = "transfer")
 	private String transfer;
 	
-	@XmlElement(name = "name")
-	private String name;
+	@XmlElement(name = "branch")
+	private String branch;
+	
+	@XmlElement(name = "service_dates")
+	private String service_dates;
+	
+	@XmlElement(name = "active")
+	private String active;
+	
+	@XmlElement(name = "status")
+	private String status;
+	
+	@XmlElement(name = "locations")
+	private String locations;
 	
 	@XmlElement(name = "rank")
 	private Long rank;
 	
-	public University(){}
+	public Military(){}
 	
-	public University(Long id, String name) {
-		super();
-		this.id = id;
-		this.name = name;
-	}
-	
-	public University(UniversityEntity universityEntity) {
+	public Military(MilitaryEntity militaryEntity) {
 		try {
-			BeanUtils.copyProperties(this, universityEntity);			
+			BeanUtils.copyProperties(this, militaryEntity);			
 		} catch ( IllegalAccessException e) {
 
 			e.printStackTrace();
@@ -76,12 +82,44 @@ public class University implements  Serializable, IAclObject{
 		this.transfer = transfer;
 	}
 
-	public String getName() {
-		return name;
+	public String getBranch() {
+		return branch;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setBranch(String branch) {
+		this.branch = branch;
+	}
+
+	public String getService_dates() {
+		return service_dates;
+	}
+
+	public void setService_dates(String service_dates) {
+		this.service_dates = service_dates;
+	}
+
+	public String getActive() {
+		return active;
+	}
+
+	public void setActive(String active) {
+		this.active = active;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getLocations() {
+		return locations;
+	}
+
+	public void setLocations(String locations) {
+		this.locations = locations;
 	}
 
 	public Long getRank() {

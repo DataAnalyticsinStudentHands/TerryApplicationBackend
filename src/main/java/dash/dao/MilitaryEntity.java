@@ -11,16 +11,16 @@ import javax.persistence.Table;
 
 import org.apache.commons.beanutils.BeanUtils;
 
-import dash.pojo.University;
+import dash.pojo.Military;
 
 /**
- * University entity
+ * Military entity
  * @author plindner
  *
  */
 @Entity
-@Table(name="university")
-public class UniversityEntity implements Serializable {
+@Table(name="military")
+public class MilitaryEntity implements Serializable {
 
 	/** id of the object */
 	@Id
@@ -34,22 +34,29 @@ public class UniversityEntity implements Serializable {
 	@Column(name = "transfer")
 	private String transfer;
 	
-	@Column(name = "name")
-	private String name;
+	@Column(name = "branch")
+	private String branch;
+	
+	@Column(name = "service_dates")
+	private String service_dates;
+	
+	@Column(name = "active")
+	private String active;
+	
+	@Column(name = "status")
+	private String status;
+	
+	@Column(name = "locations")
+	private String locations;
 	
 	@Column(name = "rank")
 	private Long rank;
 	
-	
-	public UniversityEntity(){}
+	public MilitaryEntity(){}
 
-	public UniversityEntity(String name) {
-		this.name = name;
-	}
-
-	public UniversityEntity(University university) {
+	public MilitaryEntity(Military military) {
 		try {
-			BeanUtils.copyProperties(this, university);
+			BeanUtils.copyProperties(this, military);
 		} catch ( IllegalAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -83,12 +90,44 @@ public class UniversityEntity implements Serializable {
 		this.transfer = transfer;
 	}
 
-	public String getName() {
-		return name;
+	public String getBranch() {
+		return branch;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setBranch(String branch) {
+		this.branch = branch;
+	}
+
+	public String getService_dates() {
+		return service_dates;
+	}
+
+	public void setService_dates(String service_dates) {
+		this.service_dates = service_dates;
+	}
+
+	public String getActive() {
+		return active;
+	}
+
+	public void setActive(String active) {
+		this.active = active;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getLocations() {
+		return locations;
+	}
+
+	public void setLocations(String locations) {
+		this.locations = locations;
 	}
 
 	public Long getRank() {

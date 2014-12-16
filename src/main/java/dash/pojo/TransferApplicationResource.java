@@ -160,7 +160,6 @@ public class TransferApplicationResource {
 		// TODO: Generate directory if not set
 		// if(transferApplication.getDocument_folder()==null)
 		String uploadedFileLocation = AppConstants.APPLICATION_UPLOAD_LOCATION_FOLDER
-				+ "/"
 				+ transferApplication.getDocument_folder()
 				+ "/"
 				+ fileDetail.getFileName().replaceAll("%20", "_").toLowerCase();
@@ -178,7 +177,7 @@ public class TransferApplicationResource {
 	@GET
 	@Path("/upload")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public Response getFileNames(@QueryParam("transferApplicationId") Long id)
+	public Response getFileNames(@QueryParam("applicationId") Long id)
 			throws AppException {
 
 		TransferApplication transferApplication = transferApplicationService.getTransferApplicationById(id);
@@ -243,7 +242,7 @@ public class TransferApplicationResource {
 
 	@DELETE
 	@Path("/upload")
-	public Response deleteUpload(@QueryParam("transferApplicationId") Long id,
+	public Response deleteUpload(@QueryParam("applicationId") Long id,
 			@QueryParam("fileName") String fileName) throws AppException {
 
 		TransferApplication transferApplication = transferApplicationService.getTransferApplicationById(id);

@@ -15,51 +15,55 @@ import java.lang.reflect.InvocationTargetException;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Child implements  Serializable, IAclObject{
+public class Child implements Serializable, IAclObject {
 
 	@XmlElement(name = "id")
 	private Long id;
-	
+
 	@XmlElement(name = "application_id")
 	private Long application_id;
 
+	@XmlElement(name = "transfer")
+	private String transfer;
+
 	@XmlElement(name = "name")
 	private String name;
-	
+
 	@XmlElement(name = "age")
 	private Long age;
-	
+
 	@XmlElement(name = "relationship")
 	private String relationship;
-	
+
 	@XmlElement(name = "school")
 	private String school;
-	
+
 	@XmlElement(name = "year")
 	private String year;
-	
+
 	@XmlElement(name = "self_supporting")
 	private Boolean self_supporting;
-	
+
 	public Long getId() {
 		return id;
-	}	
-	
-	public Child(){}
-	
+	}
+
+	public Child() {
+	}
+
 	public Child(Long id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
 	}
-	
+
 	public Child(ChildEntity childEntity) {
 		try {
-			BeanUtils.copyProperties(this, childEntity);			
-		} catch ( IllegalAccessException e) {
+			BeanUtils.copyProperties(this, childEntity);
+		} catch (IllegalAccessException e) {
 
 			e.printStackTrace();
-		} catch ( InvocationTargetException e) {
+		} catch (InvocationTargetException e) {
 
 			e.printStackTrace();
 		}
@@ -75,6 +79,14 @@ public class Child implements  Serializable, IAclObject{
 
 	public void setApplication_id(Long application_id) {
 		this.application_id = application_id;
+	}
+
+	public String getTransfer() {
+		return transfer;
+	}
+
+	public void setTransfer(String transfer) {
+		this.transfer = transfer;
 	}
 
 	public String getName() {

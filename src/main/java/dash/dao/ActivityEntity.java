@@ -30,6 +30,9 @@ public class ActivityEntity implements Serializable {
 	
 	@Column(name = "activity")
 	private String activity;
+	
+	@Column(name = "transfer")
+	private String transfer;
 
 	@Column(name = "position")
 	private String position;
@@ -75,6 +78,14 @@ public class ActivityEntity implements Serializable {
 
 	public void setActivity(String activity) {
 		this.activity = activity;
+	}
+
+	public String getTransfer() {
+		return transfer;
+	}
+
+	public void setTransfer(String transfer) {
+		this.transfer = transfer;
 	}
 
 	public String getPosition() {

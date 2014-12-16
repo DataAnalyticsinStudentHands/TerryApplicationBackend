@@ -31,10 +31,12 @@ public class AwardEntity implements Serializable {
 	@Column(name = "application_id")
 	private Long application_id;
 	
+	@Column(name = "transfer")
+	private String transfer;
+	
 	@Column(name = "award")
 	private String award;
 	
-	/** description of the object */
 	@Column(name = "description")
 	private String description;
 	
@@ -45,10 +47,6 @@ public class AwardEntity implements Serializable {
 	private String year;
 	
 	public AwardEntity(){}
-
-	public AwardEntity(String description) {
-		this.description = description;
-	}
 
 	public AwardEntity(Award award) {
 		try {
@@ -76,6 +74,14 @@ public class AwardEntity implements Serializable {
 
 	public void setApplication_id(Long application_id) {
 		this.application_id = application_id;
+	}
+
+	public String getTransfer() {
+		return transfer;
+	}
+
+	public void setTransfer(String transfer) {
+		this.transfer = transfer;
 	}
 
 	public String getAward() {

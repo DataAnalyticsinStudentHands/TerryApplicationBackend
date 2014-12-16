@@ -31,6 +31,9 @@ public class ChildEntity implements Serializable {
 	@Column(name = "application_id")
 	private Long application_id;
 	
+	@Column(name = "transfer")
+	private String transfer;
+	
 	@Column(name = "name")
 	private String name;
 	
@@ -81,6 +84,14 @@ public class ChildEntity implements Serializable {
 
 	public void setApplication_id(Long application_id) {
 		this.application_id = application_id;
+	}
+
+	public String getTransfer() {
+		return transfer;
+	}
+
+	public void setTransfer(String transfer) {
+		this.transfer = transfer;
 	}
 
 	public String getName() {

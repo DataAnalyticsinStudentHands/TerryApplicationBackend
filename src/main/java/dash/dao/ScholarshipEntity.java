@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
 import org.apache.commons.beanutils.BeanUtils;
 
 import dash.pojo.Scholarship;
@@ -29,6 +30,9 @@ public class ScholarshipEntity implements Serializable {
 	
 	@Column(name = "application_id")
 	private Long application_id;
+	
+	@Column(name = "transfer")
+	private Boolean transfer;
 	
 	@Column(name = "applied_received")
 	private Boolean applied_received;
@@ -74,6 +78,14 @@ public class ScholarshipEntity implements Serializable {
 
 	public void setApplication_id(Long application_id) {
 		this.application_id = application_id;
+	}
+
+	public Boolean getTransfer() {
+		return transfer;
+	}
+
+	public void setTransfer(Boolean transfer) {
+		this.transfer = transfer;
 	}
 
 	public Boolean getApplied_received() {
