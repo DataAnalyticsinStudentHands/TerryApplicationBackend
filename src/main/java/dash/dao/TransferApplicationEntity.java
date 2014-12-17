@@ -143,6 +143,9 @@ public class TransferApplicationEntity implements Serializable {
 	@Column(name = "highschool_ptk_member")
 	private String highschool_ptk_member;
 	
+	@Column(name = "induction_semester")
+	private String induction_semester;
+	
 	@Column(name = "currently_employed")
 	private String currently_employed;
 	
@@ -668,6 +671,14 @@ public class TransferApplicationEntity implements Serializable {
 
 	public void setHighschool_ptk_member(String highschool_ptk_member) {
 		this.highschool_ptk_member = highschool_ptk_member;
+	}
+
+	public String getInduction_semester() {
+		return induction_semester;
+	}
+
+	public void setInduction_semester(String induction_semester) {
+		this.induction_semester = induction_semester;
 	}
 
 	public String getCurrently_employed() {
