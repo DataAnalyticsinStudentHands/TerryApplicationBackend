@@ -21,7 +21,7 @@ import dash.pojo.TransferApplication;
  *
  */
 @Entity
-@Table(name = "transfer_Applications")
+@Table(name = "transfer_applications")
 public class TransferApplicationEntity implements Serializable {
 
 	/** id of the object */

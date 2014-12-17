@@ -42,9 +42,15 @@ public class Employment implements  Serializable, IAclObject{
 	@XmlJavaTypeAdapter(SimpleDateAdapter.class)
 	private Date date_from;
 	
+	@XmlElement(name = "date_from_na")
+	private Boolean date_from_na;
+	
 	@XmlElement(name = "date_to")
 	@XmlJavaTypeAdapter(SimpleDateAdapter.class)
 	private Date date_to;
+	
+	@XmlElement(name = "date_to_na")
+	private Boolean date_to_na;
 	
 	public Employment(){}
 	
@@ -116,12 +122,28 @@ public class Employment implements  Serializable, IAclObject{
 		this.date_from = date_from;
 	}
 
+	public Boolean getDate_from_na() {
+		return date_from_na;
+	}
+
+	public void setDate_from_na(Boolean date_from_na) {
+		this.date_from_na = date_from_na;
+	}
+
 	public Date getDate_to() {
 		return date_to;
 	}
 
 	public void setDate_to(Date date_to) {
 		this.date_to = date_to;
+	}
+
+	public Boolean getDate_to_na() {
+		return date_to_na;
+	}
+
+	public void setDate_to_na(Boolean date_to_na) {
+		this.date_to_na = date_to_na;
 	}
 
 }
