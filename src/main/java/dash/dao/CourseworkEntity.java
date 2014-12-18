@@ -28,6 +28,9 @@ public class CourseworkEntity implements Serializable {
 	@Column(name="id")
 	private Long id;
 	
+	@Column(name = "transfer")
+	private String transfer;
+	
 	@Column(name = "level")
 	private String level;
 	
@@ -49,10 +52,6 @@ public class CourseworkEntity implements Serializable {
 	
 	public CourseworkEntity(){}
 
-	public CourseworkEntity(String name) {
-		this.name = name;
-	}
-
 	public CourseworkEntity(Coursework coursework) {
 		try {
 			BeanUtils.copyProperties(this, coursework);
@@ -71,6 +70,14 @@ public class CourseworkEntity implements Serializable {
 
 	public void setId( Long id) {
 		this.id = id;
+	}
+
+	public String getTransfer() {
+		return transfer;
+	}
+
+	public void setTransfer(String transfer) {
+		this.transfer = transfer;
 	}
 
 	public String getName() {

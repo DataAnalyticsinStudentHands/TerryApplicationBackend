@@ -20,6 +20,9 @@ public class Coursework implements  Serializable, IAclObject{
 	@XmlElement(name = "id")
 	private Long id;
 	
+	@XmlElement(name = "transfer")
+	private String transfer;
+	
 	@XmlElement(name = "level")
 	private String level;
 
@@ -65,6 +68,14 @@ public class Coursework implements  Serializable, IAclObject{
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getTransfer() {
+		return transfer;
+	}
+
+	public void setTransfer(String transfer) {
+		this.transfer = transfer;
 	}
 
 	public String getName() {
