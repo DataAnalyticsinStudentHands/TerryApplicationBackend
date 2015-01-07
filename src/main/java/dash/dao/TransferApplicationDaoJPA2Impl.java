@@ -83,7 +83,7 @@ public class TransferApplicationDaoJPA2Impl implements TransferApplicationDao {
 		entityManager.flush();// force insert to receive the id of the
 								// transferApplication
 		// create hashed folder name for documents
-		String fileName = transferApplication.getId().toString();
+		String fileName = transferApplication.getId().toString() + transferApplication.getUh_id().toString();
 		int hashcode = fileName.hashCode();
 		int mask = 255;
 		int firstDir = hashcode & mask;
