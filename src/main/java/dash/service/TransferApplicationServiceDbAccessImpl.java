@@ -57,17 +57,16 @@ public class TransferApplicationServiceDbAccessImpl extends ApplicationObjectSup
 
 		validateInputForCreation(transferApplication);
 
-		// ToDo: verify existence of resource in the db (feed must be unique)
-		// TransferApplicationEntity transferApplicationByName =
-		// transferApplicationDao.getTransferApplicationByName(transferApplication.getName());
-		/*
-		 * if (transferApplicationByName != null) { throw new AppException(
-		 * Response.Status.CONFLICT.getStatusCode(), 409,
-		 * "Object with name already existing in the database with the id " +
-		 * transferApplicationByName.getId(),
-		 * "Please verify that the name are properly generated",
-		 * AppConstants.DASH_POST_URL); }
-		 */
+		//verify existence of resource in the db (uh_id must be unique)
+		TransferApplicationEntity transferApplicationByUh_id =
+				transferApplicationDao.getTransferApplicationByUh_id(transferApplication.getUh_id());
+		
+		 if (transferApplicationByUh_id != null) { throw new AppException(
+				 Response.Status.CONFLICT.getStatusCode(), 409,
+				 "Object with uh_id " + transferApplication.getUh_id() + " already existing in the database.",
+				 "Please verify.",
+				 	AppConstants.DASH_POST_URL); }
+		 
 
 		long transferApplicationId = transferApplicationDao
 				.createTransferApplication(new TransferApplicationEntity(transferApplication));
@@ -87,8 +86,8 @@ public class TransferApplicationServiceDbAccessImpl extends ApplicationObjectSup
 				|| transferApplication.getLast_name() == null
 				|| transferApplication.getUh_id() == null) {
 			throw new AppException(Response.Status.BAD_REQUEST.getStatusCode(),
-					400, "Provided data not sufficient for insertion",
-					"Please verify that the name is properly generated/set",
+					400, "Provided data not sufficient for insertion into database",
+					"Please verify that the first_name, last_name and uh_id had been properly set",
 					AppConstants.DASH_POST_URL);
 		}
 	}

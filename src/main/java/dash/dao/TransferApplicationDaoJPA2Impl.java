@@ -51,13 +51,13 @@ public class TransferApplicationDaoJPA2Impl implements TransferApplicationDao {
 	}
 
 	@Override
-	public TransferApplicationEntity getTransferApplicationByName(String name) {
+	public TransferApplicationEntity getTransferApplicationByUh_id(String uh_id) {
 
 		try {
-			String qlString = "SELECT o FROM TransferApplicationEntity o WHERE o.name = ?1";
+			String qlString = "SELECT o FROM TransferApplicationEntity o WHERE o.uh_id = ?1";
 			TypedQuery<TransferApplicationEntity> query = entityManager.createQuery(
 					qlString, TransferApplicationEntity.class);
-			query.setParameter(1, name);
+			query.setParameter(1, uh_id);
 
 			return query.getSingleResult();
 		} catch (NoResultException e) {
@@ -83,7 +83,7 @@ public class TransferApplicationDaoJPA2Impl implements TransferApplicationDao {
 		entityManager.flush();// force insert to receive the id of the
 								// transferApplication
 		// create hashed folder name for documents
-		String fileName = transferApplication.getId().toString() + transferApplication.getUh_id().toString();
+		String fileName = transferApplication.getUh_id().toString();
 		int hashcode = fileName.hashCode();
 		int mask = 255;
 		int firstDir = hashcode & mask;

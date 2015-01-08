@@ -23,12 +23,12 @@ public interface TransferApplicationDao {
 	public TransferApplicationEntity getTransferApplicationById(Long id);
 	
 	/**
-	 * Find object by name
+	 * Find application by uh_id
 	 *
 	 * @param object
-	 * @return the object with the name specified or null if not existent
+	 * @return the application with the uh_id specified or null if not existent
 	 */
-	public TransferApplicationEntity getTransferApplicationByName(String name);
+	public TransferApplicationEntity getTransferApplicationByUh_id(String uh_id);
 
 	public void deleteTransferApplication(TransferApplication transferApplication);
 
