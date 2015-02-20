@@ -48,15 +48,16 @@ public class EmploymentDaoJPA2Impl implements EmploymentDao {
 	}
 	
 	@Override
-	public List<EmploymentEntity> getEmploymentByAppId(Long appId, boolean transfer) {
+	public List<EmploymentEntity> getEmploymentByAppId(Long appId, Boolean transfer) {
 		
 		try {
-			
 			String qlString = "SELECT u FROM EmploymentEntity u WHERE u.application_id = ?1 and u.transfer = ?2";
 			
 			TypedQuery<EmploymentEntity> query = entityManager.createQuery(
 					qlString, EmploymentEntity.class);
 			query.setParameter(1, appId);
+			String param2 = transfer.toString();
+			query.setParameter(2, param2);
 
 			return query.getResultList();
 		} catch (NoResultException e) {

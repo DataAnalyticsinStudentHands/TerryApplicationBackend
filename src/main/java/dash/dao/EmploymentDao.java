@@ -22,7 +22,7 @@ public interface EmploymentDao {
 	 */
 	public EmploymentEntity getEmploymentById(Long id);
 
-	public List<EmploymentEntity> getEmploymentByAppId(Long appId, boolean transfer);
+	public List<EmploymentEntity> getEmploymentByAppId(Long appId, Boolean transfer);
 	
 	public void deleteEmployment(Employment employment);
 
