@@ -171,7 +171,7 @@ public class ApplicationServiceDbAccessImpl extends ApplicationObjectSupport
 			    if (runs != null) {
 			        for (XWPFRun r : runs) {
 			            String text = r.getText(0);
-			            if (text != null && text.contains("\u201c")) {
+			            if (text != null) {
 			            	text = text.replaceAll("\u2018|\u2019", "\'"); //Replace fancy left/right single quotes
 			   	         	text = text.replaceAll("\u201c|\u201d", "\""); //Replace fancy left/right double quotes
 			   	         	text = text.replaceAll("\u263a", ":)"); //Replace smiley emoticon
