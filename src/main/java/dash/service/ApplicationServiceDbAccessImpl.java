@@ -20,8 +20,10 @@ import javax.ws.rs.core.Response;
 
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.poi.xwpf.converter.pdf.PdfConverter;
-import org.apache.poi.xwpf.converter.pdf.PdfOptions;
+import org.apache.poi.xwpf.converter.pdf.PdfOptions; 
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ApplicationObjectSupport;
 import org.springframework.security.acls.model.MutableAclService;
@@ -162,7 +164,22 @@ public class ApplicationServiceDbAccessImpl extends ApplicationObjectSupport
 
 			// 1) Load DOCX into XWPFDocument
 			InputStream is = new FileInputStream(new File(inputFilePath));
-			XWPFDocument document = new XWPFDocument(is);
+			XWPFDocument doc = new XWPFDocument(is);
+			
+			for (XWPFParagraph p : doc.getParagraphs()) {
+			    List<XWPFRun> runs = p.getRuns();
+			    if (runs != null) {
+			        for (XWPFRun r : runs) {
+			            String text = r.getText(0);
+			            if (text != null && text.contains("\u201c")) {
+			            	text = text.replaceAll("\u2018|\u2019", "\'"); //Replace fancy left/right single quotes
+			   	         	text = text.replaceAll("\u201c|\u201d", "\""); //Replace fancy left/right double quotes
+			   	         	text = text.replaceAll("\u263a", ":)"); //Replace smiley emoticon
+			                r.setText(text, 0);
+			            }
+			        }
+			    }
+			} 
 
 			// 2) Prepare Pdf options
 			PdfOptions options = PdfOptions.create();
@@ -170,7 +187,8 @@ public class ApplicationServiceDbAccessImpl extends ApplicationObjectSupport
 			// 3) Convert XWPFDocument to Pdf
 			OutputStream out = new FileOutputStream(
 					new File(outputFilePath));
-			PdfConverter.getInstance().convert(document, out, options);
+			PdfConverter.getInstance().convert(doc, out, options);
+		
 
 			logger.debug("Generated " + outputFilePath + " in "
 					+ (System.currentTimeMillis() - start) + "ms");
